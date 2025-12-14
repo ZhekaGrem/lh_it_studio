@@ -31,7 +31,7 @@ const emit = defineEmits<{
       <!-- Logo -->
       <NuxtLink to="/" class="group">
         <div class="relative max-w-24">
-        
+
           <img src="../assets/img/logo/unnamed.webp" alt="logo" class="w-full h-full object-cover" />
 
           <div class="absolute -bottom-1 left-0 w-0 h-1 bg-core group-hover:w-full transition-all duration-300"></div>
@@ -39,14 +39,15 @@ const emit = defineEmits<{
       </NuxtLink>
 
       <!-- Navigation -->
-      <nav class="hidden md:flex items-center gap-8">
-        <a href="#services" class="text-white hover:text-core font-bold transition-colors uppercase tracking-wide">
+      <nav :class="['hidden md:flex items-center gap-8', isScrolled
+        ? 'text-white' : 'text-ink']">
+        <a href="#services" class=" hover:text-core font-bold transition-colors uppercase tracking-wide">
           Послуги
         </a>
-        <a href="#portfolio" class="text-white hover:text-core font-bold transition-colors uppercase tracking-wide">
+        <a href="#portfolio" class=" hover:text-core font-bold transition-colors uppercase tracking-wide">
           Проєкти
         </a>
-        <a href="#contact" class="text-white hover:text-core font-bold transition-colors uppercase tracking-wide">
+        <a href="#contact" class=" hover:text-core font-bold transition-colors uppercase tracking-wide">
           Контакти
         </a>
       </nav>
