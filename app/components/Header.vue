@@ -32,7 +32,7 @@ const emit = defineEmits<{
       <NuxtLink to="/" class="group">
         <div class="relative">
         
-          <img src="~/app/assets/img/logo/unnamed.webp" alt="logo" class="w-full h-full object-cover" />
+          <img src="../assets/img/logo/unnamed.webp" alt="logo" class="w-full h-full object-cover" />
 
           <div class="absolute -bottom-1 left-0 w-0 h-1 bg-core group-hover:w-full transition-all duration-300"></div>
         </div>
