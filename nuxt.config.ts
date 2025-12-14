@@ -1,6 +1,8 @@
 export default defineNuxtConfig({
   compatibilityDate: '2025-12-14',
 
+  srcDir: 'app/',
+
   modules: [
     '@nuxtjs/tailwindcss',
     '@nuxt/content',
@@ -15,10 +17,14 @@ export default defineNuxtConfig({
     }
   },
 
+  components: [
+    {
+      path: '~/components',
+      pathPrefix: false,
+    }
+  ],
+
   vite: {
-    vue: {
-      customElement: true,
-    },
     vueJsx: {
       mergeProps: true,
     },
@@ -44,5 +50,5 @@ export default defineNuxtConfig({
     }
   },
 
-  css: ['@/app/assets/css/global.css'],
+  css: ['@/assets/css/global.css'],
 })

@@ -47,37 +47,68 @@ npx shadcn-vue@latest add <component-name>
 
 ## Code Structure
 
-Проект використовує стандартну Nuxt 4 структуру:
+Проект використовує **Nuxt 4 з `srcDir: 'app/'`** структуру:
 
 ```
-├── app/
-│   └── lib/
-│       └── utils.ts          # cn() утиліта для Tailwind
+app/                          # Source directory (всі Vue файли тут)
+├── app.vue                   # Головний layout
 ├── assets/
 │   └── css/
 │       └── global.css        # Tailwind + shadcn теми
 ├── components/
-│   ├── ui/                   # shadcn-vue компоненти (Button, Card, Modal, тощо)
-│   ├── sections/             # Секції лендінгу (Hero, About, Portfolio, Services, Contact)
-│   └── modals/               # Модальні вікна (ContactForm, ChatBot)
+│   ├── ui/                   # shadcn-vue компоненти (Button, Card, Dialog, тощо)
+│   ├── sections/             # Секції лендінгу
+│   │   └── HeroSection.vue   # Hero секція
+│   ├── modals/               # Модальні вікна (ContactForm, ChatBot)
+│   └── WireframeVisualization.vue  # SVG анімація
+├── lib/
+│   └── utils.ts              # cn() утиліта для Tailwind (shadcn-vue)
 ├── composables/              # Vue composables (useModal, useContactForm, useTelegram)
-├── public/                   # Статичні файли (images, icons, fonts)
 ├── pages/                    # Nuxt pages (index.vue - головна сторінка)
-├── types/                    # TypeScript типи (portfolio, services, contact)
-├── nuxt.config.ts            # Nuxt конфігурація
-├── tailwind.config.ts        # Tailwind конфігурація
-└── components.json           # shadcn-vue конфігурація
+└── types/                    # TypeScript типи (portfolio, services, contact)
+
+public/                       # Статичні файли (доступні через /)
+└── icons/
+    └── pixel-sprites.svg     # SVG іконки (browser, robot, brain, etc.)
+
+Root:                         # Конфігурація проекту
+├── nuxt.config.ts            # Nuxt config (srcDir: 'app/')
+├── tailwind.config.ts        # Tailwind config (custom colors, fonts, shadows)
+├── components.json           # shadcn-vue config
+└── tsconfig.json             # TypeScript config (paths aliases)
 ```
+
+### Важливо про структуру:
+
+**`srcDir: 'app/'`** в `nuxt.config.ts` означає:
+- Всі Vue файли, components, composables, pages → в `app/`
+- Статичні файли → в `public/` (root)
+- Конфігурація → в root (nuxt.config.ts, tailwind.config.ts, etc.)
+- CSS імпорт: `css: ['@/assets/css/global.css']` (@ вказує на app/)
 
 ### Ключові директорії
 
-- **`components/ui/`** - shadcn-vue UI компоненти (Button, Card, Dialog, Input, тощо)
-- **`components/sections/`** - Секції лендінгу (Hero, About, Portfolio, Services, Contact)
-- **`components/modals/`** - Модальні вікна (форма контакту, чат з ботом)
-- **`composables/`** - Vue composables для роботи з модалками, формами, Telegram API
-- **`assets/css/`** - Глобальні стилі, Tailwind директиви, CSS змінні
+- **`app/components/ui/`** - shadcn-vue UI компоненти (Button, Card, Dialog, Input, тощо)
+- **`app/components/sections/`** - Секції лендінгу (Hero, About, Portfolio, Services, Contact)
+- **`app/components/modals/`** - Модальні вікна (форма контакту, чат з ботом)
+- **`app/composables/`** - Vue composables для роботи з модалками, формами, Telegram API
+- **`app/assets/css/`** - Глобальні стилі, Tailwind директиви, CSS змінні
+- **`app/lib/`** - Utility функції (cn() для Tailwind класів)
 - **`public/`** - Статичні ресурси (зображення проектів, іконки, логотипи)
-- **`types/`** - TypeScript інтерфейси та типи
+- **`app/types/`** - TypeScript інтерфейси та типи
+
+### Правила роботи зі структурою
+
+**ЗАВЖДИ:**
+- Нові компоненти створюй в `app/components/`
+- Нові composables в `app/composables/`
+- Статичні файли (images, fonts) в `public/`
+- CSS тільки в `app/assets/css/global.css`
+
+**НІКОЛИ:**
+- НЕ створюй Vue файли в root (тільки в `app/`)
+- НЕ створюй `assets/` в root (тільки `app/assets/`)
+- НЕ змінюй `srcDir: 'app/'` в nuxt.config.ts
 
 ## Architecture Patterns
 
@@ -146,18 +177,6 @@ components/sections/
 @/components/ → ./components/
 @/composables/ → ./composables/
 ```
-
-Використовуй ці алиаси в імпортах:
-
-```typescript
-// ✅ ДОБРЕ
-import { Button } from '@/components/ui/button';
-import { useContactModal } from '@/composables/useModal';
-
-// ❌ ПОГАНО
-import { Button } from '../../../components/ui/button';
-```
-
 ### Nuxt Configuration
 
 **`nuxt.config.ts`** ключові налаштування:
@@ -170,11 +189,12 @@ import { Button } from '../../../components/ui/button';
 ### Tailwind Configuration
 
 **`tailwind.config.ts`** - налаштування shadcn-vue тем:
+**version Tailwind 3.4.17**
 
 - Використовує CSS змінні для кольорів (`--background`, `--foreground`, тощо)
-- Підтримка dark mode через клас `.dark`
 - Кастомні радіуси (`--radius`)
 - Кольорова палітра для компонентів
+- використовуй app/lib/utils.ts - cn
 
 ### shadcn-vue Configuration
 
@@ -311,14 +331,101 @@ export const useFeature = () => {
 
 ---
 
+## 🎨 Дизайн система
+
+### Кольори (Brutalist Design)
+
+**Основна палітра (в `tailwind.config.ts`):**
+```typescript
+colors: {
+  ink: '#111111',      // Основний чорний (текст, рамки, тіні)
+  bg: '#F8F9FA',       // Off-white фон
+  core: '#FF4D00',     // Acid Lime (акцентний колір, кнопки, анімації)
+  error: '#FF2E2E'     // Червоний для помилок
+}
+```
+
+**Використання:**
+```vue
+<!-- Текст -->
+<h1 class="text-ink">Заголовок</h1>
+
+<!-- Фон -->
+<section class="bg-bg">...</section>
+
+<!-- Акцент -->
+<button class="bg-core text-ink">CTA</button>
+```
+
+### Типографіка
+
+**Шрифти:**
+```typescript
+fontFamily: {
+  display: ['Space Grotesk', 'sans-serif'],  // Заголовки (жирний, тісний)
+  body: ['Inter', 'sans-serif'],             // Основний текст
+  pixel: ['Press Start 2P', 'monospace']     // Декоративний піксельний
+}
+```
+
+**Letter spacing & Line height:**
+```typescript
+letterSpacing: {
+  tighter: '-0.02em'  // -2% для заголовків (компактніше)
+}
+lineHeight: {
+  tight: '100%'       // Заголовки "б'ються" (плотні рядки)
+}
+```
+
+**Використання:**
+```vue
+<!-- Заголовок: Space Grotesk, bold, тісний -->
+<h1 class="font-display font-bold text-7xl leading-tight tracking-tighter">
+  САЙТИ ТА БОТИ
+</h1>
+
+<!-- Текст: Inter, нормальний -->
+<p class="font-body text-xl">Автоматизуємо бізнес...</p>
+```
+
+### Brutalist тіні
+
+**Box shadows:**
+```typescript
+boxShadow: {
+  'brutal': '4px 4px 0px #111111',           // Стандартна
+  'brutal-lg': '6px 6px 0px #111111',        // Велика
+  'brutal-core': '6px 6px 0px #FF4D00'       // З Acid Lime
+}
+```
+
+**Використання:**
+```vue
+<!-- Кнопка з тінню -->
+<button class="bg-core shadow-brutal hover:shadow-brutal-lg border-2 border-ink">
+  [ОБГОВОРИТИ ПРОЄКТ]
+</button>
+```
+
+**Hover ефект (зміщення тіні):**
+```vue
+<button class="shadow-brutal hover:shadow-brutal-lg
+               hover:translate-x-[-2px] hover:translate-y-[-2px]
+               transition-all duration-200">
+```
+
+---
+
 ## 🎨 Правила стилізації
 
 ### Пріоритет (від вищого до нижчого)
 
-1. **Tailwind utility classes** — головний спосіб стилізації (`p-4`, `text-lg`, `bg-primary`, тощо)
-2. **CSS змінні shadcn-vue** — для кольорів та тем (`bg-background`, `text-foreground`, `border-border`)
-3. **Tailwind @apply** — у `<style>` блоці для повторюваних патернів (рідко!)
-4. **Inline style** — **ТІЛЬКИ** для динамічних значень з runtime JS
+1. **Tailwind utility classes** — головний спосіб стилізації (`p-4`, `text-lg`, `bg-ink`, тощо)
+2. **Кастомні Tailwind класи** — з `tailwind.config.ts` (`text-core`, `shadow-brutal`, `font-display`)
+3. **CSS змінні shadcn-vue** — для UI компонентів (`bg-background`, `text-foreground`, `border-border`)
+4. **Tailwind @apply** — у `<style>` блоці для повторюваних патернів (рідко!)
+5. **Inline style** — **ТІЛЬКИ** для динамічних значень з runtime JS
 
 ### 🚫 ЗАБОРОНИ стилізації
 

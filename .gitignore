@@ -4,8 +4,10 @@
 .nuxt
 .nitro
 .cache
+.claude
 dist
 
+NUL
 # Node dependencies
 node_modules
 

@@ -1,13 +1,239 @@
-
-@import "tw-animate-css";
-
-@plugin "tailwindcss-animate";
-
-@custom-variant dark (&:is(.dark *));
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Reset styles START - БЕЗ ЗМІН */
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  box-sizing: border-box;
+}
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+
+ol,
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+blockquote,
+q {
+  quotes: none;
+  margin: 0;
+  padding: 0;
+}
+
+audio,
+canvas,
+video {
+  display: inline-block;
+  max-width: 100%;
+}
+
+html {
+  font-size: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:active,
+a:hover {
+  outline: 0;
+}
+
+figure {
+  margin: 0;
+}
+
+form {
+  margin: 0;
+}
+
+legend {
+  border: 0;
+  padding: 0;
+  white-space: normal;
+}
+
+button,
+input,
+select,
+textarea {
+  font-size: 100%;
+  margin: 0;
+  vertical-align: baseline;
+  font-family: inherit;
+}
+
+button,
+input {
+  line-height: normal;
+}
+
+button,
+select {
+  text-transform: none;
+}
+
+button,
+html input[type='button'],
+input[type='reset'],
+input[type='submit'] {
+  cursor: pointer;
+  overflow: visible;
+}
+
+button[disabled],
+html input[disabled] {
+  cursor: default;
+}
+
+textarea {
+  resize: vertical;
+  overflow: auto;
+  vertical-align: top;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+::selection {
+  background: #b3d4fc;
+  text-shadow: none;
+}
+
+img {
+  border: 0;
+  -ms-interpolation-mode: bicubic;
+  vertical-align: middle;
+  max-width: 100%;
+  height: auto;
+}
+
+fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: inherit;
+  line-height: 1.2;
+  font-weight: inherit;
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+/* Reset styles END */
 
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
@@ -56,7 +282,7 @@
   --color-bg: #F8F9FA;          /* Майже білий (холодний папір) */
   --color-surface: #FFFFFF;     /* Картки */
   --color-ink: #111111;         /* Текст/бордери */
-  --color-core: #CCFF00;        /* Акцент (Acid Lime) */
+  --color-core: #FF4D00;        /* Акцент (Acid Lime) */
   --color-error: #FF2E2E;       /* Помилки */
   
   /* === ТИПОГРАФІКА === */
@@ -120,33 +346,58 @@
   --transition-base: 0.2s ease;
 }
 
-/* === DARK MODE (опціонально) === */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-bg: #0A0A0A;
-    --color-surface: #1A1A1A;
-    --color-ink: #F8F9FA;
-  }
-}
+
 
 /* === ГЛОБАЛЬНІ СТИЛІ === */
 @layer base {
-  /* Smooth scroll */
-  html {
-    scroll-behavior: smooth;
+  :root {
+    /* === КОЛЬОРИ === */
+    --color-bg: #F8F9FA;
+    --color-surface: #FFFFFF;
+    --color-ink: #111111;
+    --color-core: #FF4D00; /* Acid Lime */
+    --color-error: #FF2E2E;
+
+    /* Shadcn сумісність (маппинг на твої кольори) */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+    --primary: 142 86% 29%;
+    --primary-foreground: 355.7 100% 97.3%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 142.1 76.2% 36.3%;
+    
+    /* === ТИПОГРАФІКА === */
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-pixel: 'Press Start 2P', monospace;
+
+    /* === SPACING === */
+    --space-xs: 0.5rem;
+    --space-sm: 1rem;
+    --space-md: 1.5rem;
+    --space-lg: 2rem;
+    --space-xl: 3rem;
+    --space-2xl: 4rem;
+    --space-3xl: 6rem;
+
+    /* === BRUTALISM === */
+    --radius: 0px; /* Brutalism не любить радіуси */
   }
-  
-  /* Selection color */
-  ::selection {
-    background-color: var(--color-lime);
-    color: var(--color-ink);
-  }
-  
-  /* Focus visible (Brutalism style) */
-  *:focus-visible {
-    outline: 3px solid var(--color-lime);
-    outline-offset: 2px;
-  }
+
+
 }
 
 /* === КОМПОНЕНТИ === */
@@ -310,4 +561,94 @@ p {
 
 .text-balance {
   text-wrap: balance;
+}
+
+/* ============================================
+   BRUTALIST ANIMATIONS (Neo-Brutalism)
+   ============================================ */
+
+/* Glitch effect для тексту в Preloader */
+@keyframes glitch {
+  0%, 100% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(2px, -2px); }
+  60% { transform: translate(-1px, 1px); }
+  80% { transform: translate(1px, -1px); }
+}
+
+/* Blink курсора в терміналі */
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+/* Marquee (ліворуч) */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-33.333%); }
+}
+
+/* Marquee (праворуч) */
+@keyframes marquee-reverse {
+  0% { transform: translateX(-33.333%); }
+  100% { transform: translateX(0); }
+}
+
+/* Slow spin для 3D елементів */
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Shake при помилках форми */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  75% { transform: translateX(10px); }
+}
+
+/* Success pulse */
+@keyframes success-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+/* === ANIMATION UTILITY CLASSES === */
+.animate-glitch {
+  animation: glitch 0.3s ease-in-out;
+}
+
+.animate-blink {
+  animation: blink 1s infinite;
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+.animate-marquee-reverse {
+  animation: marquee-reverse 30s linear infinite;
+}
+
+.animate-marquee-reverse:hover {
+  animation-play-state: paused;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
+
+/* Form error state */
+.input-error {
+  animation: shake 0.3s ease-in-out;
+  border-color: #FF2E2E; 
+}
+
+/* Form success state */
+.form-success {
+  animation: success-pulse 0.5s ease-in-out;
 }

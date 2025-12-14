@@ -25,7 +25,7 @@
         :y1="y * 50"
         :x2="400"
         :y2="y * 50"
-        stroke="#CCFF00"
+        stroke="#FF4D00"
         stroke-width="1"
         opacity="0.3"
         class="grid-line"
@@ -40,7 +40,7 @@
         :y1="0"
         :x2="x * 50"
         :y2="400"
-        stroke="#CCFF00"
+        stroke="#FF4D00"
         stroke-width="1"
         opacity="0.3"
         class="grid-line"
@@ -53,7 +53,7 @@
         <path
           d="M150,120 L250,120 L250,220 L150,220 Z"
           fill="none"
-          stroke="#CCFF00"
+          stroke="#FF4D00"
           stroke-width="2"
           class="animate-pulse-slow"
         />
@@ -61,15 +61,15 @@
         <path
           d="M120,150 L220,150 L220,250 L120,250 Z"
           fill="none"
-          stroke="#CCFF00"
+          stroke="#FF4D00"
           stroke-width="2"
           class="animate-pulse-slow"
         />
         <!-- Connecting lines -->
-        <line x1="150" y1="120" x2="120" y2="150" stroke="#CCFF00" stroke-width="2"/>
-        <line x1="250" y1="120" x2="220" y2="150" stroke="#CCFF00" stroke-width="2"/>
-        <line x1="250" y1="220" x2="220" y2="250" stroke="#CCFF00" stroke-width="2"/>
-        <line x1="150" y1="220" x2="120" y2="250" stroke="#CCFF00" stroke-width="2"/>
+        <line x1="150" y1="120" x2="120" y2="150" stroke="#FF4D00" stroke-width="2"/>
+        <line x1="250" y1="120" x2="220" y2="150" stroke="#FF4D00" stroke-width="2"/>
+        <line x1="250" y1="220" x2="220" y2="250" stroke="#FF4D00" stroke-width="2"/>
+        <line x1="150" y1="220" x2="120" y2="250" stroke="#FF4D00" stroke-width="2"/>
       </g>
 
       <!-- Data Points -->
@@ -80,7 +80,7 @@
           :cx="point.x"
           :cy="point.y"
           :r="point.r"
-          fill="#CCFF00"
+          fill="#FF4D00"
           filter="url(#glow)"
           class="pulse-dot"
           :style="{ animationDelay: `${i * 0.2}s` }"
@@ -94,7 +94,7 @@
           cy="200"
           r="80"
           fill="none"
-          stroke="#CCFF00"
+          stroke="#FF4D00"
           stroke-width="1"
           opacity="0.2"
           class="orbit-path"
@@ -104,7 +104,7 @@
           cy="200"
           r="120"
           fill="none"
-          stroke="#CCFF00"
+          stroke="#FF4D00"
           stroke-width="1"
           opacity="0.2"
           class="orbit-path"
@@ -113,7 +113,7 @@
         <!-- Orbiting dots -->
         <circle
           r="4"
-          fill="#CCFF00"
+          fill="#FF4D00"
           filter="url(#glow)"
           class="orbit-dot-1"
         >
@@ -126,7 +126,7 @@
 
         <circle
           r="3"
-          fill="#CCFF00"
+          fill="#FF4D00"
           filter="url(#glow)"
           class="orbit-dot-2"
         >
@@ -143,7 +143,7 @@
         cx="200"
         cy="200"
         r="8"
-        fill="#CCFF00"
+        fill="#FF4D00"
         filter="url(#glow)"
         class="pulse-dot"
       />
@@ -153,7 +153,7 @@
         <line
           x1="200" y1="200"
           x2="280" y2="150"
-          stroke="#CCFF00"
+          stroke="#FF4D00"
           stroke-width="1"
           class="connection-line"
           style="animation-delay: 0s"
@@ -161,7 +161,7 @@
         <line
           x1="200" y1="200"
           x2="320" y2="280"
-          stroke="#CCFF00"
+          stroke="#FF4D00"
           stroke-width="1"
           class="connection-line"
           style="animation-delay: 0.3s"
@@ -169,7 +169,7 @@
         <line
           x1="200" y1="200"
           x2="100" y2="180"
-          stroke="#CCFF00"
+          stroke="#FF4D00"
           stroke-width="1"
           class="connection-line"
           style="animation-delay: 0.6s"
