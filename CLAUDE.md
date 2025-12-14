@@ -1,0 +1,789 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Project Overview
+
+**LH IT Studio** - це лендінг-візитка для міні ІТ студії, побудований на **Nuxt 4 + Vue 3** з використанням **shadcn-vue** компонентів та **Tailwind CSS**. Проект призначений для демонстрації портфоліо та залучення нових замовників.
+
+### Основні можливості
+
+- Презентація послуг студії
+- Портфоліо реалізованих проектів
+- Форма контакту (надсилає повідомлення в Telegram)
+- Чат з ботом для уточнення деталей замовлення
+- Адаптивний дизайн для всіх пристроїв
+
+### Технічний стек
+
+- **Framework**: Nuxt 4 (SSR/SSG)
+- **UI**: Vue 3 + shadcn-vue + Tailwind CSS
+- **Icons**: lucide-vue-next
+- **Validation**: Zod
+- **Utilities**: class-variance-authority, clsx, tailwind-merge
+- **TypeScript**: повна типізація
+
+## Development Commands
+
+```bash
+# Запустити dev сервер
+npm run dev
+
+# Зібрати для production
+npm run build
+
+# Попередній перегляд production білду
+npm run preview
+
+# Згенерувати статичний сайт (SSG)
+npm run generate
+
+# Підготувати Nuxt типи
+npm run prepare
+
+# Додати shadcn-vue компонент
+npx shadcn-vue@latest add <component-name>
+```
+
+## Code Structure
+
+Проект використовує стандартну Nuxt 4 структуру:
+
+```
+├── app/
+│   └── lib/
+│       └── utils.ts          # cn() утиліта для Tailwind
+├── assets/
+│   └── css/
+│       └── global.css        # Tailwind + shadcn теми
+├── components/
+│   ├── ui/                   # shadcn-vue компоненти (Button, Card, Modal, тощо)
+│   ├── sections/             # Секції лендінгу (Hero, About, Portfolio, Services, Contact)
+│   └── modals/               # Модальні вікна (ContactForm, ChatBot)
+├── composables/              # Vue composables (useModal, useContactForm, useTelegram)
+├── public/                   # Статичні файли (images, icons, fonts)
+├── pages/                    # Nuxt pages (index.vue - головна сторінка)
+├── types/                    # TypeScript типи (portfolio, services, contact)
+├── nuxt.config.ts            # Nuxt конфігурація
+├── tailwind.config.ts        # Tailwind конфігурація
+└── components.json           # shadcn-vue конфігурація
+```
+
+### Ключові директорії
+
+- **`components/ui/`** - shadcn-vue UI компоненти (Button, Card, Dialog, Input, тощо)
+- **`components/sections/`** - Секції лендінгу (Hero, About, Portfolio, Services, Contact)
+- **`components/modals/`** - Модальні вікна (форма контакту, чат з ботом)
+- **`composables/`** - Vue composables для роботи з модалками, формами, Telegram API
+- **`assets/css/`** - Глобальні стилі, Tailwind директиви, CSS змінні
+- **`public/`** - Статичні ресурси (зображення проектів, іконки, логотипи)
+- **`types/`** - TypeScript інтерфейси та типи
+
+## Architecture Patterns
+
+### Composables Pattern
+
+Для управління станом модальних вікон використовуємо Vue composables:
+
+**`composables/useModal.ts`**
+```typescript
+export const useContactModal = () => useState('contactModal', () => false);
+export const useChatBotModal = () => useState('chatBotModal', () => false);
+```
+
+**Використання в компонентах:**
+```vue
+<script setup lang="ts">
+const isContactOpen = useContactModal();
+
+const openContact = () => {
+  isContactOpen.value = true;
+};
+</script>
+```
+
+### Telegram Integration
+
+Надсилання повідомлень з форми контакту в Telegram:
+
+**`composables/useTelegram.ts`**
+```typescript
+export const useTelegramNotification = () => {
+  const sendContactForm = async (data: ContactFormData) => {
+    // Відправка через Telegram Bot API або webhook
+    await $fetch('/api/telegram/send', {
+      method: 'POST',
+      body: data
+    });
+  };
+
+  return { sendContactForm };
+};
+```
+
+### Component Structure
+
+Кожна секція лендінгу - окремий Vue компонент:
+
+```
+components/sections/
+├── HeroSection.vue         # Головний екран з CTA
+├── AboutSection.vue        # Про студію
+├── ServicesSection.vue     # Послуги
+├── PortfolioSection.vue    # Проекти
+└── ContactSection.vue      # Контактна інформація
+```
+
+## Important Configuration Details
+
+### TypeScript Paths
+
+Проект використовує path aliases:
+
+```typescript
+@/          → ./              (root)
+~/          → ./              (root)
+@/components/ → ./components/
+@/composables/ → ./composables/
+```
+
+Використовуй ці алиаси в імпортах:
+
+```typescript
+// ✅ ДОБРЕ
+import { Button } from '@/components/ui/button';
+import { useContactModal } from '@/composables/useModal';
+
+// ❌ ПОГАНО
+import { Button } from '../../../components/ui/button';
+```
+
+### Nuxt Configuration
+
+**`nuxt.config.ts`** ключові налаштування:
+
+- **Modules**: @nuxtjs/tailwindcss, @nuxt/content, @nuxtjs/seo, nuxt-schema-org, @nuxt/eslint
+- **CSS**: Global Tailwind styles з shadcn темами
+- **TypeScript**: строга типізація
+- **SSG**: можливість генерації статичного сайту
+
+### Tailwind Configuration
+
+**`tailwind.config.ts`** - налаштування shadcn-vue тем:
+
+- Використовує CSS змінні для кольорів (`--background`, `--foreground`, тощо)
+- Підтримка dark mode через клас `.dark`
+- Кастомні радіуси (`--radius`)
+- Кольорова палітра для компонентів
+
+### shadcn-vue Configuration
+
+**`components.json`** - конфігурація shadcn-vue:
+
+- **Style**: new-york
+- **TypeScript**: enabled
+- **CSS Variables**: enabled (для тем)
+- **Base Color**: neutral
+- **Icon Library**: lucide-vue-next
+
+## Key Data Flows
+
+### 1. Contact Form Flow
+
+```
+User fills form → Validation (Zod) → Submit → Telegram API → Success message
+```
+
+**Компоненти:**
+- `components/modals/ContactFormModal.vue` - модальне вікно з формою
+- `composables/useContactForm.ts` - логіка валідації та submit
+- `composables/useTelegram.ts` - відправка в Telegram
+
+### 2. ChatBot Flow
+
+```
+User opens chat → Bot asks questions → Collect answers → Send to Telegram
+```
+
+**Компоненти:**
+- `components/modals/ChatBotModal.vue` - чат інтерфейс
+- `composables/useChatBot.ts` - логіка бота (питання, відповіді)
+- `composables/useTelegram.ts` - надсилання результатів
+
+### 3. Portfolio Display
+
+```
+Static data → PortfolioSection → Card components → Modal with details
+```
+
+**Структура даних:**
+```typescript
+interface PortfolioProject {
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+  technologies: string[];
+  link?: string;
+}
+```
+
+## Common Tasks
+
+### Додавання нової секції лендінгу
+
+1. Створи компонент у `components/sections/NewSection.vue`
+2. Імплементуй структуру з Tailwind класами
+3. Використовуй shadcn-vue компоненти де можливо
+4. Додай секцію в `pages/index.vue`
+
+```vue
+<!-- components/sections/NewSection.vue -->
+<template>
+  <section class="py-20 bg-background">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold text-foreground">Section Title</h2>
+      <!-- Content -->
+    </div>
+  </section>
+</template>
+```
+
+### Додавання нового shadcn-vue компонента
+
+```bash
+# Переглянути доступні компоненти
+npx shadcn-vue@latest add
+
+# Додати конкретний компонент
+npx shadcn-vue@latest add button
+npx shadcn-vue@latest add card
+npx shadcn-vue@latest add dialog
+```
+
+Компоненти встановлюються в `components/ui/`
+
+### Створення нового composable
+
+```typescript
+// composables/useFeature.ts
+export const useFeature = () => {
+  const state = useState('featureState', () => false);
+
+  const toggle = () => {
+    state.value = !state.value;
+  };
+
+  return {
+    state,
+    toggle
+  };
+};
+```
+
+### Додавання проекту в портфоліо
+
+1. Створи об'єкт проекту у `types/portfolio.ts`
+2. Додай дані в `data/portfolio.ts` (або прямо в компонент)
+3. Додай зображення в `public/images/portfolio/`
+4. Компонент автоматично відобразить новий проект
+
+## Important Notes
+
+### Project Type
+
+- **Static Landing Page** (без backend)
+- Всі дані статичні або hardcoded
+- Форми відправляють дані в Telegram
+- Немає аутентифікації та бази даних
+
+### Telegram Integration
+
+- Використовується Telegram Bot API для отримання повідомлень з форм
+- Налаштування: Bot Token у `.env` (якщо потрібно)
+- Повідомлення надходять у приватний чат або канал
+
+### SEO Optimization
+
+- Використовується `@nuxtjs/seo` для meta tags
+- `nuxt-schema-org` для structured data
+- Кожна секція має семантичну HTML структуру
+
+---
+
+## 🎨 Правила стилізації
+
+### Пріоритет (від вищого до нижчого)
+
+1. **Tailwind utility classes** — головний спосіб стилізації (`p-4`, `text-lg`, `bg-primary`, тощо)
+2. **CSS змінні shadcn-vue** — для кольорів та тем (`bg-background`, `text-foreground`, `border-border`)
+3. **Tailwind @apply** — у `<style>` блоці для повторюваних патернів (рідко!)
+4. **Inline style** — **ТІЛЬКИ** для динамічних значень з runtime JS
+
+### 🚫 ЗАБОРОНИ стилізації
+
+- **НЕ використовуй inline `style=""`** якщо можна через Tailwind
+- **НЕ створюй нові CSS класи** якщо є Tailwind utility
+- **НЕ перевизначай shadcn-vue теми** без крайньої необхідності
+- **НЕ міксуй підходи** - або Tailwind, або CSS модулі (не обидва)
+- **НЕ використовуй SCSS** - проект на чистому CSS + Tailwind
+
+### ✅ Приклади правильної стилізації
+
+```vue
+<!-- ❌ ПОГАНО - inline styles -->
+<div style="padding: 16px; margin-bottom: 24px; background-color: #f5f5f5;">
+
+<!-- ✅ ДОБРЕ - Tailwind utilities -->
+<div class="p-4 mb-6 bg-muted">
+
+<!-- ❌ ПОГАНО - custom CSS класи для простих речей -->
+<style scoped>
+.my-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+</style>
+
+<!-- ✅ ДОБРЕ - Tailwind utilities -->
+<div class="flex justify-center items-center">
+
+<!-- ❌ ПОГАНО - хардкод кольорів -->
+<h1 class="text-[#FF6B00]">
+
+<!-- ✅ ДОБРЕ - shadcn-vue CSS змінні -->
+<h1 class="text-primary">
+```
+
+### Використання shadcn-vue CSS змінних
+
+**Доступні кольори:**
+- `bg-background` / `text-foreground` - основні кольори
+- `bg-primary` / `text-primary-foreground` - головний акцент
+- `bg-secondary` / `text-secondary-foreground` - вторинний акцент
+- `bg-muted` / `text-muted-foreground` - приглушені кольори
+- `bg-accent` / `text-accent-foreground` - акцентні елементи
+- `bg-card` / `text-card-foreground` - картки
+- `border-border` - рамки
+- `ring-ring` - focus кільця
+
+### Коли inline style допустимий
+
+```vue
+<!-- ✅ Динамічне значення з JS -->
+<div :style="{ width: `${progress}%` }">
+
+<!-- ✅ Значення з props -->
+<div :style="{ backgroundColor: project.color }">
+
+<!-- ✅ Calculated значення -->
+<div :style="{ height: `calc(100vh - ${headerHeight}px)` }">
+```
+
+### Responsive Design
+
+```vue
+<!-- Використовуй Tailwind breakpoints -->
+<div class="text-sm md:text-base lg:text-lg">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+<div class="p-4 md:p-6 lg:p-8">
+```
+
+**Breakpoints:**
+- `sm:` - 640px
+- `md:` - 768px
+- `lg:` - 1024px
+- `xl:` - 1280px
+- `2xl:` - 1536px
+
+### Перед стилізацією перевір
+
+1. **shadcn-vue компоненти** - чи є готовий UI компонент?
+2. **Tailwind utilities** - чи можна скласти з utility класів?
+3. **CSS змінні** (`global.css`) - чи визначені кольори/змінні?
+4. **Існуючі компоненти** - чи є схожий паттерн в проекті?
+
+---
+
+## 📝 Правила роботи з кодом
+
+При будь-якому запиті використовуй цей підхід:
+
+<analysis_first>
+ОБОВ'ЯЗКОВО перед написанням коду:
+
+1. Проаналізуй проблему та існуючий код
+2. Знайди всі дублювання операцій або патернів
+3. Запропонуй найпростіше та найефективніше рішення
+4. Запитай підтвердження перед реалізацією
+</analysis_first>
+
+<requirements>
+- Найпростіше рішення без over-engineering
+- НЕ додавати нічого зайвого від себе
+- Повністю працююча система для продакшену
+- Готовий код без заглушок та TODO
+</requirements>
+
+<duplicate_check>
+Перевір на дублювання:
+- Однакові операції або функції
+- Повторювані патерни коду
+- Можливість винести спільну логіку
+
+Якщо знайдеш - обов'язково повідом!
+</duplicate_check>
+
+<constraints>
+- Production-ready код з обробкою помилок
+- Мінімальні зміни в існуючій структурі
+- Збереження Vue/Nuxt best practices
+- Type-safe TypeScript код
+- Accessibility (a11y) де можливо
+</constraints>
+
+<output_format>
+Показувати тільки:
+- 1 рядок до зміни
+- Змінені рядки
+- 1 рядок після зміни
+
+Повний код - тільки якщо змінюється >50% файлу
+</output_format>
+
+<project_context>
+- **Stack**: Nuxt 4, Vue 3, TypeScript, shadcn-vue, Tailwind CSS, Zod
+- **Architecture**: Nuxt standard (composables, components, pages)
+- **Domain**: Лендінг ІТ студії з портфоліо
+- **No Backend**: статичний сайт, дані hardcoded
+- **Telegram**: тільки відправка повідомлень з форм
+</project_context>
+
+---
+
+### ⚡ Головний принцип
+
+**МІНІМУМ КОДУ = МАКСИМУМ ЯКОСТІ**
+
+Перед кожною зміною запитай: *"Чи можна вирішити це меншою кількістю рядків?"*
+
+---
+
+### 🚫 ЗАБОРОНИ
+
+#### Не ускладнюй
+
+- **НЕ додавай властивості/параметри "на всяк випадок"** - якщо одна prop вирішує задачу, друга не потрібна
+- **НЕ дублюй функціонал** - якщо composable A робить роботу, composable B для того ж = зайве
+- **НЕ додавай fallbacks** без реальної браузерної потреби
+- **НЕ пиши defensive code** там де він не потрібен
+- **НЕ створюй абстракції** для одноразового використання
+
+#### Не відволікайся
+
+- **НЕ рефактор** код який працює і не пов'язаний з задачею
+- **НЕ пропонуй "покращення"** які не просили
+- **НЕ змінюй стиль/форматування** існуючого коду без потреби
+- **НЕ додавай коментарі** до очевидного коду
+- **НЕ додавай TypeScript коментарі** якщо типи говорять самі за себе
+
+#### Не гадай
+
+- **Пропонуй 2-3 варіанти** - і вкажи який ОДИН найкращий для цієї задачі
+- **НЕ пиши "можливо", "напевно", "варто б"** - або знаєш, або питай
+- **НЕ припускай** що потрібно - питай якщо неясно
+- **НЕ додавай фічі** які не в скоупі задачі
+
+---
+
+### ✅ Алгоритм перед написанням коду
+
+1. **Яка конкретна проблема?** (одне речення)
+2. **Який мінімальний код її вирішує?** (ідеально 1-5 рядків)
+3. **Чи є вже щось в проекті що робить схожу роботу?** (перевір composables, components)
+4. **Чи кожен рядок необхідний?** (видали все зайве)
+5. **Чи зрозуміло це іншому розробнику?** (якщо потрібні коментарі - спрости код)
+
+---
+
+### 🎯 Вимоги до коду
+
+- **Найпростіше рішення** яке працює
+- **Production-ready** без заглушок, TODO, console.log
+- **Type-safe TypeScript** - всі типи явні
+- **Vue 3 Composition API** - `<script setup>` синтаксис
+- **Reactivity** - правильне використання `ref`, `computed`, `watch`
+- **Accessibility** - семантичний HTML, ARIA атрибути де потрібно
+- **Performance** - `defineAsyncComponent` для важких компонентів
+- **Мінімальні зміни** в існуючій структурі
+
+---
+
+### 🔍 Перевірка на дублювання
+
+Перед створенням нового:
+
+**Composable:**
+- Чи є схожий composable?
+- Чи можна розширити існуючий?
+
+**Component:**
+- Чи є shadcn-vue компонент?
+- Чи є схожий в `components/`?
+- Чи можна додати prop в існуючий?
+
+**Utility function:**
+- Чи є в `app/lib/utils.ts`?
+- Чи є вбудована JS/Vue функція?
+
+**Знайшов дублювання - повідом перед реалізацією!**
+
+---
+
+### 📤 Формат виводу змін
+
+**Мінімальний контекст:**
+```vue
+// 1 рядок до
+- старий код
++ новий код
+// 1 рядок після
+```
+
+**Повний код** - тільки якщо:
+- Новий файл
+- Змінюється >50% існуючого файлу
+
+**Без пояснень** - якщо зміна очевидна.
+
+---
+
+### 🧩 Vue/Nuxt Best Practices
+
+#### Composition API
+
+```vue
+<!-- ✅ ДОБРЕ - script setup -->
+<script setup lang="ts">
+const count = ref(0);
+const doubled = computed(() => count.value * 2);
+</script>
+
+<!-- ❌ ПОГАНО - Options API (не використовуємо) -->
+<script>
+export default {
+  data() {
+    return { count: 0 }
+  }
+}
+</script>
+```
+
+#### Reactivity
+
+```typescript
+// ✅ ДОБРЕ - примітиви в ref
+const name = ref('');
+const isOpen = ref(false);
+
+// ✅ ДОБРЕ - об'єкти в reactive (якщо багато полів)
+const form = reactive({
+  name: '',
+  email: '',
+  message: ''
+});
+
+// ❌ ПОГАНО - забув .value
+name = 'New'; // Помилка!
+
+// ✅ ДОБРЕ
+name.value = 'New';
+```
+
+#### Props & Emits
+
+```vue
+<script setup lang="ts">
+// ✅ ДОБРЕ - типізовані props
+interface Props {
+  title: string;
+  count?: number;
+}
+const props = withDefaults(defineProps<Props>(), {
+  count: 0
+});
+
+// ✅ ДОБРЕ - типізовані emits
+interface Emits {
+  (e: 'update', value: string): void;
+  (e: 'close'): void;
+}
+const emit = defineEmits<Emits>();
+</script>
+```
+
+#### Composables
+
+```typescript
+// ✅ ДОБРЕ - чітка відповідальність
+export const useContactModal = () => {
+  const isOpen = useState('contactModal', () => false);
+
+  const open = () => { isOpen.value = true; };
+  const close = () => { isOpen.value = false; };
+
+  return { isOpen, open, close };
+};
+
+// ❌ ПОГАНО - забагато логіки в одному composable
+export const useEverything = () => {
+  // modal + form + validation + api + ...
+};
+```
+
+---
+
+## Telegram Integration Details
+
+### Відправка повідомлень з форми
+
+**Option 1: Через Telegram Bot API (рекомендовано)**
+
+```typescript
+// composables/useTelegram.ts
+export const useTelegramNotification = () => {
+  const config = useRuntimeConfig();
+
+  const sendMessage = async (text: string) => {
+    await $fetch(`https://api.telegram.org/bot${config.public.telegramBotToken}/sendMessage`, {
+      method: 'POST',
+      body: {
+        chat_id: config.public.telegramChatId,
+        text,
+        parse_mode: 'HTML'
+      }
+    });
+  };
+
+  return { sendMessage };
+};
+```
+
+**Option 2: Через власний API endpoint (якщо додається backend)**
+
+```typescript
+// server/api/telegram/send.post.ts
+export default defineEventHandler(async (event) => {
+  const body = await readBody(event);
+  // Відправка через Telegram Bot API
+  // ...
+});
+```
+
+### Налаштування в nuxt.config.ts
+
+```typescript
+export default defineNuxtConfig({
+  runtimeConfig: {
+    public: {
+      telegramBotToken: process.env.TELEGRAM_BOT_TOKEN,
+      telegramChatId: process.env.TELEGRAM_CHAT_ID
+    }
+  }
+});
+```
+
+### .env файл
+
+```bash
+TELEGRAM_BOT_TOKEN=your_bot_token_here
+TELEGRAM_CHAT_ID=your_chat_id_here
+```
+
+---
+
+## shadcn-vue Components Usage
+
+### Найчастіше використовувані компоненти
+
+**Button**
+```vue
+<Button variant="default" size="lg" @click="handleClick">
+  Click me
+</Button>
+
+<!-- Варіанти: default, destructive, outline, secondary, ghost, link -->
+<!-- Розміри: default, sm, lg, icon -->
+```
+
+**Card**
+```vue
+<Card>
+  <CardHeader>
+    <CardTitle>Title</CardTitle>
+    <CardDescription>Description</CardDescription>
+  </CardHeader>
+  <CardContent>
+    Content
+  </CardContent>
+  <CardFooter>
+    Footer
+  </CardFooter>
+</Card>
+```
+
+**Dialog (Modal)**
+```vue
+<Dialog v-model:open="isOpen">
+  <DialogContent>
+    <DialogHeader>
+      <DialogTitle>Title</DialogTitle>
+      <DialogDescription>Description</DialogDescription>
+    </DialogHeader>
+
+    <!-- Content -->
+
+    <DialogFooter>
+      <Button @click="isOpen = false">Close</Button>
+    </DialogFooter>
+  </DialogContent>
+</Dialog>
+```
+
+**Input & Form**
+```vue
+<div class="space-y-4">
+  <div class="space-y-2">
+    <Label for="email">Email</Label>
+    <Input
+      id="email"
+      v-model="email"
+      type="email"
+      placeholder="your@email.com"
+    />
+  </div>
+</div>
+```
+
+---
+
+## Final Checklist
+
+Перед commit перевір:
+
+- [ ] Код відформатовано (Prettier/ESLint)
+- [ ] Немає console.log / debugger
+- [ ] Немає TODO коментарів
+- [ ] TypeScript помилок немає
+- [ ] Компоненти мають правильні типи props
+- [ ] Tailwind класи використані замість inline styles
+- [ ] shadcn-vue компоненти використані де можливо
+- [ ] Responsive design працює (mobile, tablet, desktop)
+- [ ] Accessibility: alt texts, aria-labels, semantic HTML
+- [ ] Немає дублювання коду
+- [ ] Код зрозумілий без коментарів
+
+---
+
+**Пам'ятай**: Простота > Складність. Якщо рішення виглядає складним - шукай простіший спосіб.

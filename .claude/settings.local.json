@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node --version:*)",
+      "Bash(cat:*)",
+      "Bash(npm install:*)",
+      "Bash(npx nuxt prepare:*)",
+      "Bash(rm:*)",
+      "Bash(pnpm install:*)",
+      "Bash(npm cache clean:*)",
+      "Bash(npx shadcn-vue@latest init:*)"
+    ]
+  }
+}
