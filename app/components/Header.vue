@@ -30,7 +30,7 @@ const emit = defineEmits<{
 
       <!-- Logo -->
       <NuxtLink to="/" class="group">
-        <div class="relative">
+        <div class="relative max-w-24">
         
           <img src="../assets/img/logo/unnamed.webp" alt="logo" class="w-full h-full object-cover" />
 
