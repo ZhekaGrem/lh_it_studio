@@ -11,7 +11,8 @@
       "Bash(npx shadcn-vue@latest init:*)",
       "Bash(npm run prepare:*)",
       "Bash(npm run dev:*)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(npm run build:*)"
     ]
   }
 }
