@@ -11,7 +11,15 @@ const props = defineProps<Props>()
 
 const emit = defineEmits<{
   close: []
+  openConsultation: []
 }>()
+
+// Виправлено: функція для роботи з window
+const openExternalLink = (url?: string) => {
+  if (url && typeof window !== 'undefined') {
+    window.open(url, '_blank')
+  }
+}
 </script>
 
 <template>
@@ -130,7 +138,7 @@ const emit = defineEmits<{
               variant="primary"
               size="md"
               rotation="rotate-1"
-              @click="() => window.open(project.demoLink, '_blank')"
+              @click="openExternalLink(project!.demoLink)"
             >
               <ExternalLink class="w-5 h-5 mr-2" />
               Переглянути проект
@@ -140,7 +148,7 @@ const emit = defineEmits<{
               variant="outline"
               size="md"
               rotation="-rotate-1"
-              @click="() => window.open(project.githubLink, '_blank')"
+              @click="openExternalLink(project!.githubLink)"
             >
               <Github class="w-5 h-5 mr-2" />
               GitHub
