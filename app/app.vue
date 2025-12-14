@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { Project } from '~/types/portfolio'
+
 // Import Google Fonts
 useHead({
   link: [
@@ -27,6 +29,8 @@ const handlePreloaderComplete = () => {
 // Modal states
 const isConsultationOpen = ref(false)
 const isAIChatOpen = ref(false)
+const isProjectModalOpen = ref(false)
+const selectedProject = ref<Project | null>(null)
 
 const openConsultation = () => {
   isConsultationOpen.value = true
@@ -42,6 +46,16 @@ const openAIChat = () => {
 
 const closeAIChat = () => {
   isAIChatOpen.value = false
+}
+
+const openProject = (project: Project) => {
+  selectedProject.value = project
+  isProjectModalOpen.value = true
+}
+
+const closeProject = () => {
+  isProjectModalOpen.value = false
+  selectedProject.value = null
 }
 </script>
 
@@ -61,6 +75,11 @@ const closeAIChat = () => {
       <HeroSection @open-consultation="openConsultation" />
       <MarqueeSection />
       <ServicesSection @open-consultation="openConsultation" />
+      <PortfolioSection
+        @open-project="openProject"
+        @open-consultation="openConsultation"
+      />
+      <PortfolioMonitor />
       <WhyUsSection />
       <Footer @open-consultation="openConsultation" />
     </main>
@@ -74,6 +93,13 @@ const closeAIChat = () => {
     <AIChatModal
       :is-open="isAIChatOpen"
       @close="closeAIChat"
+    />
+
+    <ProjectModal
+      :is-open="isProjectModalOpen"
+      :project="selectedProject"
+      @close="closeProject"
+      @open-consultation="openConsultation"
     />
   </div>
 </template>

@@ -14,6 +14,22 @@ export interface Project {
   rotation: string
 }
 
+// --- Types --- 
+export interface ProjectSection {
+  id: string
+  title: string
+  category: string
+  description: string
+  tech: string[]
+  image: string
+  url: string
+  stats?: {
+    label: string
+    value: string
+  }[]
+}
+
+
 export type ProjectCategory =
   | 'E-Commerce'
   | 'AI & Automation'
