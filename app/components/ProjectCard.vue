@@ -37,14 +37,14 @@ const handleClick = () => {
         </div>
 
         <!-- Category Badge -->
-        <div class="absolute top-4 left-4 bg-black px-3 py-1 border-2 border-black">
+        <div class="absolute top-4 left-4 bg-foreground px-3 py-1 border-2 border-black">
           <span class="text-xs font-bold text-white uppercase">
             {{ project.category }}
           </span>
         </div>
 
         <!-- Hover Overlay -->
-        <div class="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+        <div class="absolute inset-0 bg-foreground/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
           <div class="text-white text-center space-y-2">
             <ArrowRight class="w-12 h-12 mx-auto animate-pulse" />
             <p class="font-bold uppercase text-sm">Детальніше</p>

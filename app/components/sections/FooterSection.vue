@@ -7,34 +7,25 @@
         <!-- Left: Contact Info -->
         <div>
           <!-- Huge Email -->
-          <a
-            href="mailto:hello@lh.studio"
-            class="
+          <a href="mailto:hello@lh.studio" class="
               block font-display font-bold
               text-4xl md:text-5xl lg:text-6xl xl:text-7xl
               text-ink leading-tight tracking-tighter
               hover:text-core transition-colors duration-200
               mb-12
-            "
-          >
+            ">
             HELLO@LH.STUDIO
           </a>
 
           <!-- Social Links -->
           <div class="space-y-4 mb-12">
-            <a
-              v-for="social in socials"
-              :key="social.name"
-              :href="social.link"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="
+            <a v-for="social in socials" :key="social.name" :href="social.link" target="_blank"
+              rel="noopener noreferrer" class="
                 block font-display font-bold text-2xl md:text-3xl lg:text-4xl
                 text-ink hover:text-core
                 transition-colors duration-200
                 group
-              "
-            >
+              ">
               <span class="inline-flex items-center gap-4">
                 {{ social.name }}
                 <span class="
@@ -78,91 +69,61 @@
           <form @submit.prevent="handleSubmit" class="space-y-8">
             <!-- Name Input -->
             <div class="group">
-              <label
-                for="name"
-                class="
+              <label for="name" class="
                   block font-display font-bold text-sm uppercase tracking-wider
                   text-ink mb-3
-                "
-              >
+                ">
                 ІМ'Я
               </label>
-              <input
-                id="name"
-                v-model="formData.name"
-                type="text"
-                required
-                class="
+              <input id="name" v-model="formData.name" type="text" required class="
                   w-full bg-transparent
                   border-0 border-b-4 border-ink
                   font-body text-xl md:text-2xl text-ink
                   focus:border-core focus:outline-none
                   transition-colors duration-200
                   pb-2
-                "
-                placeholder="Ваше ім'я"
-              />
+                " placeholder="Ваше ім'я" />
             </div>
 
             <!-- Phone Input -->
             <div class="group">
-              <label
-                for="phone"
-                class="
+              <label for="phone" class="
                   block font-display font-bold text-sm uppercase tracking-wider
                   text-ink mb-3
-                "
-              >
+                ">
                 ТЕЛЕФОН
               </label>
-              <input
-                id="phone"
-                v-model="formData.phone"
-                type="tel"
-                required
-                class="
+              <input id="phone" :value="formData.phone" @input="formData.phone = onPhoneInput($event)"
+                @focus="onPhoneFocus" type="tel" inputmode="tel" required class="
                   w-full bg-transparent
                   border-0 border-b-4 border-ink
                   font-body text-xl md:text-2xl text-ink
                   focus:border-core focus:outline-none
                   transition-colors duration-200
                   pb-2
-                "
-                placeholder="+380"
-              />
+                " placeholder="+380" />
             </div>
 
             <!-- Message Input (optional) -->
             <div class="group">
-              <label
-                for="message"
-                class="
+              <label for="message" class="
                   block font-display font-bold text-sm uppercase tracking-wider
                   text-ink mb-3
-                "
-              >
+                ">
                 ПОВІДОМЛЕННЯ (опціонально)
               </label>
-              <textarea
-                id="message"
-                v-model="formData.message"
-                rows="3"
-                class="
+              <textarea id="message" v-model="formData.message" rows="3" class="
                   w-full bg-transparent
                   border-0 border-b-4 border-ink
                   font-body text-xl md:text-2xl text-ink
                   focus:border-core focus:outline-none
                   transition-colors duration-200
                   pb-2 resize-none
-                "
-                placeholder="Розкажіть про ваш проєкт..."
-              ></textarea>
+                " placeholder="Розкажіть про ваш проєкт..."></textarea>
             </div>
 
             <!-- Submit Button -->
-            <button
-              type="submit"
-              class="
+            <button type="submit" class="
                 w-full px-8 py-6
                 bg-core text-ink
                 font-display font-bold text-lg md:text-xl uppercase tracking-wide
@@ -172,20 +133,15 @@
                 hover:shadow-[8px_8px_0px_#111111]
                 transition-all duration-200
                 disabled:opacity-50 disabled:cursor-not-allowed
-              "
-              :disabled="isSubmitting"
-            >
+              " :disabled="isSubmitting">
               {{ isSubmitting ? 'ВІДПРАВЛЯЄМО...' : 'ВІДПРАВИТИ ЗАЯВКУ' }}
             </button>
 
             <!-- Success Message -->
-            <div
-              v-if="showSuccess"
-              class="
+            <div v-if="showSuccess" class="
                 p-4 border-4 border-core bg-core/10
                 font-body text-lg text-ink text-center
-              "
-            >
+              ">
               ✓ Заявку відправлено! Ми зв'яжемося з вами найближчим часом.
             </div>
           </form>
@@ -199,15 +155,11 @@
         flex flex-col md:flex-row justify-between items-center gap-4
       ">
         <div class="font-pixel text-[10px] text-ink/50 uppercase">
-          CRAFTED WITH BRUTALIST DESIGN PRINCIPLES
+          CRAFTED WITH BRUTALIST DESIGN PRINCIPLES2
         </div>
         <div class="flex gap-6">
-          <a
-            v-for="link in legalLinks"
-            :key="link.name"
-            :href="link.href"
-            class="font-body text-sm text-ink/70 hover:text-core transition-colors"
-          >
+          <a v-for="link in legalLinks" :key="link.name" :href="link.href"
+            class="font-body text-sm text-ink/70 hover:text-core transition-colors">
             {{ link.name }}
           </a>
         </div>
@@ -217,6 +169,7 @@
 </template>
 
 <script setup lang="ts">
+import { useUaPhone } from '@/composables/useUaPhone';
 const formData = ref({
   name: '',
   phone: '',
@@ -269,4 +222,5 @@ const handleSubmit = async () => {
     isSubmitting.value = false;
   }
 };
+const { onPhoneFocus, onPhoneInput } = useUaPhone();
 </script>

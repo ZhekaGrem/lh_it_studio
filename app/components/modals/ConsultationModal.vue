@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { X } from 'lucide-vue-next'
-
+import { useUaPhone } from '@/composables/useUaPhone';
+const { onPhoneFocus, onPhoneInput } = useUaPhone();
 interface Props {
   isOpen: boolean
 }
@@ -40,12 +41,9 @@ const handleSubmit = async (e: Event) => {
 </script>
 
 <template>
-  <div
-    v-if="isOpen"
-    class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
-  >
+  <div v-if="isOpen" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-foreground/80 backdrop-blur-sm">
     <!-- Modal Container -->
-    <div class="relative w-full max-w-2xl">
+    <div class="relative w-full max-w-2xl  max-h-[80%]">
 
       <!-- Floating Badge -->
       <div class="absolute -top-6 -left-6 bg-yellow px-4 py-2 border-4 border-black rotate-12 shadow-brutal-md z-10">
@@ -60,10 +58,8 @@ const handleSubmit = async (e: Event) => {
           <h2 class="text-3xl font-bold font-display text-black uppercase">
             Замовити Консультацію
           </h2>
-          <button
-            @click="emit('close')"
-            class="w-10 h-10 bg-black text-core hover:bg-yellow hover:text-black border-4 border-black transition-colors"
-          >
+          <button @click="emit('close')"
+            class="w-10 h-10 bg-foreground text-core hover:bg-yellow hover:text-black border-4 border-black transition-colors">
             <X class="w-6 h-6 mx-auto" />
           </button>
         </div>
@@ -76,18 +72,12 @@ const handleSubmit = async (e: Event) => {
             <label class="block text-sm font-bold text-black mb-2 uppercase tracking-wide">
               /// Ім'я
             </label>
-            <input
-              v-model="formData.name"
-              type="text"
-              required
-              class="
+            <input v-model="formData.name" type="text" required class="
                 w-full px-4 py-3 bg-white border-4 border-black
                 focus:border-core focus:shadow-brutal
                 outline-none transition-all duration-200
                 font-bold text-lg rotate-1
-              "
-              placeholder="Ваше ім'я"
-            />
+              " placeholder="Ваше ім'я" />
           </div>
 
           <!-- Phone Input -->
@@ -95,18 +85,13 @@ const handleSubmit = async (e: Event) => {
             <label class="block text-sm font-bold text-black mb-2 uppercase tracking-wide">
               /// Телефон
             </label>
-            <input
-              v-model="formData.phone"
-              type="tel"
-              required
-              class="
+            <input :value="formData.phone" @input="formData.phone = onPhoneInput($event)" @focus="onPhoneFocus"
+              type="tel" inputmode="tel" required class="
                 w-full px-4 py-3 bg-white border-4 border-black
                 focus:border-yellow focus:shadow-brutal-yellow
                 outline-none transition-all duration-200
                 font-bold text-lg
-              "
-              placeholder="+380"
-            />
+              " placeholder="+380" />
           </div>
 
           <!-- Service Select -->
@@ -114,16 +99,12 @@ const handleSubmit = async (e: Event) => {
             <label class="block text-sm font-bold text-black mb-2 uppercase tracking-wide">
               /// Послуга
             </label>
-            <select
-              v-model="formData.service"
-              required
-              class="
+            <select v-model="formData.service" required class="
                 w-full px-4 py-3 bg-white border-4 border-black
                 focus:border-core focus:shadow-brutal
                 outline-none transition-all duration-200
                 font-bold text-lg
-              "
-            >
+              ">
               <option value="">Оберіть послугу</option>
               <option value="website">Веб-розробка</option>
               <option value="bot">Telegram Bot</option>
@@ -137,28 +118,17 @@ const handleSubmit = async (e: Event) => {
             <label class="block text-sm font-bold text-black mb-2 uppercase tracking-wide">
               /// Повідомлення (опціонально)
             </label>
-            <textarea
-              v-model="formData.message"
-              rows="4"
-              class="
+            <textarea v-model="formData.message" rows="4" class="
                 w-full px-4 py-3 bg-white border-4 border-black
                 focus:border-yellow focus:shadow-brutal-yellow
                 outline-none transition-all duration-200
                 font-bold resize-none
-              "
-              placeholder="Розкажіть про ваш проєкт..."
-            />
+              " placeholder="Розкажіть про ваш проєкт..." />
           </div>
 
           <!-- Submit Button -->
-          <Button
-            type="submit"
-            variant="primary"
-            size="lg"
-            rotation="rotate-2"
-            full-width
-            :disabled="isSubmitting || isSuccess"
-          >
+          <Button type="submit" variant="primary" size="lg" rotation="rotate-2" full-width
+            :disabled="isSubmitting || isSuccess">
             {{ isSubmitting ? '/// ВІДПРАВКА...' : isSuccess ? '✓ ВІДПРАВЛЕНО!' : 'ВІДПРАВИТИ ЗАЯВКУ' }}
           </Button>
 

@@ -88,6 +88,8 @@ export default {
         "brutal-md": "8px 8px 0px #111111",
         "brutal-lg": "12px 12px 0px #111111",
         "brutal-xl": "16px 16px 0px #111111",
+        "brutal-xl-core": "16px 16px 0px #FF4D00",
+        "brutal-xl-neon": "16px 16px 0px #00FF00",
         "brutal-core": "6px 6px 0px #FF4D00",
         "brutal-yellow": "8px 8px 0px #FFD700",
         "brutal-neon": "8px 8px 0px #00FF00",

@@ -78,7 +78,7 @@ const handleQuickAction = (action: string) => {
 <template>
   <div
     v-if="isOpen"
-    class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+    class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-foreground/80 backdrop-blur-sm"
   >
     <div class="relative w-full max-w-3xl h-[80vh]">
 
@@ -88,12 +88,12 @@ const handleQuickAction = (action: string) => {
       </div>
 
       <!-- Chat Container -->
-      <div class="bg-black border-8 border-yellow shadow-brutal-xl h-full flex flex-col rotate-1">
+      <div class="bg-foreground border-8 border-yellow shadow-brutal-xl h-full flex flex-col rotate-1">
 
         <!-- Header -->
         <div class="bg-yellow px-6 py-4 border-b-4 border-black flex items-center justify-between">
           <div class="flex items-center gap-3">
-            <div class="w-12 h-12 bg-black border-4 border-black flex items-center justify-center text-2xl rotate-3">
+            <div class="w-12 h-12 bg-foreground border-4 border-black flex items-center justify-center text-2xl rotate-3">
               🤖
             </div>
             <div>
@@ -105,7 +105,7 @@ const handleQuickAction = (action: string) => {
           </div>
           <button
             @click="emit('close')"
-            class="w-10 h-10 bg-black text-yellow hover:bg-core hover:text-black border-4 border-black transition-colors -rotate-6"
+            class="w-10 h-10 bg-foreground text-yellow hover:bg-core hover:text-black border-4 border-black transition-colors -rotate-6"
           >
             <X class="w-6 h-6 mx-auto" />
           </button>
@@ -140,9 +140,9 @@ const handleQuickAction = (action: string) => {
           <div v-if="isTyping" class="flex justify-start">
             <div class="bg-bg px-4 py-3 border-4 border-black -rotate-1 shadow-brutal">
               <div class="flex gap-1">
-                <div class="w-2 h-2 bg-black rounded-full animate-bounce"></div>
-                <div class="w-2 h-2 bg-black rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
-                <div class="w-2 h-2 bg-black rounded-full animate-bounce" style="animation-delay: 0.4s"></div>
+                <div class="w-2 h-2 bg-foreground rounded-full animate-bounce"></div>
+                <div class="w-2 h-2 bg-foreground rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+                <div class="w-2 h-2 bg-foreground rounded-full animate-bounce" style="animation-delay: 0.4s"></div>
               </div>
             </div>
           </div>
@@ -151,7 +151,7 @@ const handleQuickAction = (action: string) => {
         </div>
 
         <!-- Input Area -->
-        <div class="p-4 bg-black border-t-4 border-yellow">
+        <div class="p-4 bg-foreground border-t-4 border-yellow">
           <div class="flex gap-2">
             <input
               v-model="input"

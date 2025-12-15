@@ -23,7 +23,7 @@ const emit = defineEmits<{
   <header :class="[
     'fixed top-0 left-0 right-0 z-40 transition-all duration-300',
     isScrolled
-      ? 'bg-black border-b-4 border-core shadow-[0_8px_0px_#FF4D00]'
+      ? 'bg-ink border-b-4 border-core shadow-[0_8px_0px_#FF4D00]'
       : 'bg-transparent'
   ]">
     <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">

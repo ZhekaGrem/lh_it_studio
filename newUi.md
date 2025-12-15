@@ -41,10 +41,10 @@ export default function Preloader() {
   if (isComplete) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-black flex items-center justify-center font-mono">
+    <div className="fixed inset-0 z-50 bg-foreground flex items-center justify-center font-mono">
       <div className="w-full max-w-2xl px-4">
         {/* Terminal header */}
-        <div className="border-4 border-[#FF4D00] bg-black p-6">
+        <div className="border-4 border-[#FF4D00] bg-foreground p-6">
           <div className="flex items-center gap-2 mb-4 border-b-2 border-[#FF4D00] pb-2">
             <div className="w-3 h-3 rounded-full bg-red-500"></div>
             <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
@@ -140,7 +140,7 @@ export default function Header({
       className={`
         fixed top-0 left-0 right-0 z-40 transition-all duration-300
         ${isScrolled 
-          ? 'bg-black border-b-4 border-[#FF4D00] shadow-[0_8px_0px_#FF4D00]' 
+          ? 'bg-foreground border-b-4 border-[#FF4D00] shadow-[0_8px_0px_#FF4D00]' 
           : 'bg-transparent'
         }
       `}
@@ -278,7 +278,7 @@ export default function ConsultationModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-foreground/80 backdrop-blur-sm">
       
       {/* Modal Container */}
       <div className="relative w-full max-w-2xl">
@@ -298,7 +298,7 @@ export default function ConsultationModal({
             </h2>
             <button
               onClick={onClose}
-              className="w-10 h-10 bg-black text-[#FF4D00] hover:bg-[#FFD700] hover:text-black border-4 border-black transition-colors"
+              className="w-10 h-10 bg-foreground text-[#FF4D00] hover:bg-[#FFD700] hover:text-black border-4 border-black transition-colors"
             >
               <X className="w-6 h-6 mx-auto" />
             </button>
@@ -526,7 +526,7 @@ export default function AIChatModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-foreground/80 backdrop-blur-sm">
       
       <div className="relative w-full max-w-3xl h-[80vh]">
         
@@ -536,12 +536,12 @@ export default function AIChatModal({
         </div>
 
         {/* Chat Container */}
-        <div className="bg-black border-8 border-[#FFD700] shadow-[16px_16px_0px_#FF4D00] h-full flex flex-col rotate-1">
+        <div className="bg-foreground border-8 border-[#FFD700] shadow-[16px_16px_0px_#FF4D00] h-full flex flex-col rotate-1">
           
           {/* Header */}
           <div className="bg-[#FFD700] px-6 py-4 border-b-4 border-black flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-black border-4 border-black flex items-center justify-center text-2xl rotate-3">
+              <div className="w-12 h-12 bg-foreground border-4 border-black flex items-center justify-center text-2xl rotate-3">
                 🤖
               </div>
               <div>
@@ -553,7 +553,7 @@ export default function AIChatModal({
             </div>
             <button
               onClick={onClose}
-              className="w-10 h-10 bg-black text-[#FFD700] hover:bg-[#FF4D00] hover:text-black border-4 border-black transition-colors -rotate-6"
+              className="w-10 h-10 bg-foreground text-[#FFD700] hover:bg-[#FF4D00] hover:text-black border-4 border-black transition-colors -rotate-6"
             >
               <X className="w-6 h-6 mx-auto" />
             </button>
@@ -591,9 +591,9 @@ export default function AIChatModal({
               <div className="flex justify-start">
                 <div className="bg-[#F8F9FA] px-4 py-3 border-4 border-black -rotate-1 shadow-[4px_4px_0px_#000]">
                   <div className="flex gap-1">
-                    <div className="w-2 h-2 bg-black rounded-full animate-bounce"></div>
-                    <div className="w-2 h-2 bg-black rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-                    <div className="w-2 h-2 bg-black rounded-full animate-bounce" style={{ animationDelay: '0.4s' }}></div>
+                    <div className="w-2 h-2 bg-foreground rounded-full animate-bounce"></div>
+                    <div className="w-2 h-2 bg-foreground rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                    <div className="w-2 h-2 bg-foreground rounded-full animate-bounce" style={{ animationDelay: '0.4s' }}></div>
                   </div>
                 </div>
               </div>
@@ -603,7 +603,7 @@ export default function AIChatModal({
           </div>
 
           {/* Input Area */}
-          <div className="p-4 bg-black border-t-4 border-[#FFD700]">
+          <div className="p-4 bg-foreground border-t-4 border-[#FFD700]">
             <div className="flex gap-2">
               <input
                 type="text"
@@ -737,7 +737,7 @@ export default function HeroSection({ onOpenConsultation }: { onOpenConsultation
               {['🖥️', '🤖', '🧠'].map((icon, i) => (
                 <div
                   key={i}
-                  className="w-16 h-16 bg-black border-4 border-black flex items-center justify-center text-3xl hover:bg-[#FF4D00] hover:-translate-y-2 transition-all"
+                  className="w-16 h-16 bg-foreground border-4 border-black flex items-center justify-center text-3xl hover:bg-[#FF4D00] hover:-translate-y-2 transition-all"
                   style={{ transform: `rotate(${i % 2 === 0 ? '2deg' : '-2deg'})` }}
                 >
                   {icon}
@@ -752,7 +752,7 @@ export default function HeroSection({ onOpenConsultation }: { onOpenConsultation
             <div className="absolute inset-0 bg-gradient-to-br from-[#FF4D00]/20 to-[#FFD700]/20 blur-3xl"></div>
             
             {/* Animated 3D Element */}
-            <div className="relative w-full h-full border-4 border-black bg-black/5 rotate-3 shadow-[16px_16px_0px_#111111]">
+            <div className="relative w-full h-full border-4 border-black bg-foreground/5 rotate-3 shadow-[16px_16px_0px_#111111]">
               <svg viewBox="0 0 400 400" className="w-full h-full">
                 {/* Grid */}
                 <g stroke="#FF4D00" strokeWidth="2" opacity="0.3">
@@ -951,7 +951,7 @@ export default function ServicesSection({ onOpenConsultation }: { onOpenConsulta
       icon: '🧠',
       items: ['Інтеграція GPT', 'Аналітика даних', 'Автоматизація', 'ML рішення'],
       price: 'Custom',
-      bgColor: 'bg-black',
+      bgColor: 'bg-foreground',
       borderColor: 'border-[#00FF00]',
       rotation: '-rotate-1',
       size: 'lg:col-span-1',
@@ -1050,7 +1050,7 @@ export default function ServicesSection({ onOpenConsultation }: { onOpenConsulta
                   border-4 border-black
                   ${service.textWhite 
                     ? 'bg-[#FFD700] text-black hover:bg-[#00FF00]' 
-                    : 'bg-black text-white hover:bg-[#FF4D00] hover:text-black'
+                    : 'bg-foreground text-white hover:bg-[#FF4D00] hover:text-black'
                   }
                   ${i % 2 === 0 ? 'rotate-1' : '-rotate-1'}
                   hover:rotate-0
@@ -1114,7 +1114,7 @@ export default function WhyUsSection() {
   ];
 
   return (
-    <section className="py-20 bg-black relative overflow-hidden">
+    <section className="py-20 bg-foreground relative overflow-hidden">
       
       {/* Section Header */}
       <div className="max-w-7xl mx-auto px-4 mb-16 text-center">

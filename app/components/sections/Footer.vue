@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useUaPhone } from '@/composables/useUaPhone';
 const formData = reactive({
   name: '',
   phone: '',
@@ -13,6 +14,8 @@ const handleSubmit = (e: Event) => {
   e.preventDefault()
   emit('openConsultation')
 }
+
+const { onPhoneFocus, onPhoneInput } = useUaPhone();
 </script>
 
 <template>
@@ -29,17 +32,14 @@ const handleSubmit = (e: Event) => {
 
           <!-- Email -->
           <div>
-            <a
-              href="mailto:hello@lh.studio"
-              class="
+            <a href="mailto:hello@lh.studio" class="
                 inline-block text-6xl md:text-8xl font-bold font-display text-black
                 hover:text-core
                 transition-colors
                 leading-none
                 -rotate-2
                 hover:rotate-0
-              "
-            >
+              ">
               HELLO@
               <br />
               LH.STUDIO
@@ -48,20 +48,15 @@ const handleSubmit = (e: Event) => {
 
           <!-- Social Links -->
           <div class="space-y-4">
-            <a
-              v-for="social in [
-                { name: 'Instagram', url: '#' },
-                { name: 'Telegram', url: '#' },
-                { name: 'LinkedIn', url: '#' }
-              ]"
-              :key="social.name"
-              :href="social.url"
-              class="
+            <a v-for="social in [
+              { name: 'Instagram', url: '#' },
+              { name: 'Telegram', url: '#' },
+              { name: 'LinkedIn', url: '#' }
+            ]" :key="social.name" :href="social.url" class="
                 group flex items-center gap-4 text-4xl font-bold text-black
                 hover:text-core
                 transition-colors
-              "
-            >
+              ">
               {{ social.name }}
               <span class="inline-block group-hover:translate-x-2 transition-transform">
                 →
@@ -96,18 +91,12 @@ const handleSubmit = (e: Event) => {
               <label class="block text-sm font-bold text-black mb-2 uppercase">
                 /// Ім'я
               </label>
-              <input
-                v-model="formData.name"
-                type="text"
-                required
-                class="
+              <input v-model="formData.name" type="text" required class="
                   w-full bg-transparent border-b-4 border-black
                   focus:border-core
                   outline-none pb-2 text-xl font-bold
                   transition-colors
-                "
-                placeholder="Ваше ім'я"
-              />
+                " placeholder="Ваше ім'я" />
             </div>
 
             <!-- Phone -->
@@ -115,18 +104,13 @@ const handleSubmit = (e: Event) => {
               <label class="block text-sm font-bold text-black mb-2 uppercase">
                 /// Телефон
               </label>
-              <input
-                v-model="formData.phone"
-                type="tel"
-                required
-                class="
+              <input :value="formData.phone" @input="formData.phone = onPhoneInput($event)" @focus="onPhoneFocus"
+                type="tel" inputmode="tel" required class="
                   w-full bg-transparent border-b-4 border-black
                   focus:border-yellow
                   outline-none pb-2 text-xl font-bold
                   transition-colors
-                "
-                placeholder="+380"
-              />
+                " placeholder="+380" />
             </div>
 
             <!-- Message -->
@@ -134,27 +118,16 @@ const handleSubmit = (e: Event) => {
               <label class="block text-sm font-bold text-black mb-2 uppercase">
                 /// Повідомлення
               </label>
-              <textarea
-                v-model="formData.message"
-                rows="4"
-                class="
+              <textarea v-model="formData.message" rows="4" class="
                   w-full bg-transparent border-b-4 border-black
                   focus:border-core
                   outline-none pb-2 font-bold resize-none
                   transition-colors
-                "
-                placeholder="Розкажіть про ваш проєкт..."
-              />
+                " placeholder="Розкажіть про ваш проєкт..." />
             </div>
 
             <!-- Submit -->
-            <Button
-              type="submit"
-              variant="primary"
-              size="lg"
-              rotation="-rotate-2"
-              full-width
-            >
+            <Button type="submit" variant="primary" size="lg" rotation="-rotate-2" full-width>
               Відправити Заявку
             </Button>
 

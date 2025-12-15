@@ -1,3 +1,6 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&family=Press+Start+2P&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -323,7 +326,7 @@ p {
   --shadow-sm: 2px 2px 0px var(--color-ink);
   --shadow-md: 4px 4px 0px var(--color-ink);
   --shadow-lg: 6px 6px 0px var(--color-ink);
-  --shadow-lime: 6px 6px 0px var(--color-lime);
+  --shadow-core: 6px 6px 0px var(--color-core);
   
   /* === РАДІУСИ (НЕМАЄ!) === */
   --radius: 0px;

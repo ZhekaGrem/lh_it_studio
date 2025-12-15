@@ -72,7 +72,7 @@ const emit = defineEmits<{
               v-for="(icon, i) in ['🖥️', '🤖', '🧠']"
               :key="i"
               :class="[
-                'w-16 h-16 bg-black border-4 border-black flex items-center justify-center text-3xl',
+                'w-16 h-16 bg-foreground border-4 border-black flex items-center justify-center text-3xl',
                 'hover:bg-core hover:-translate-y-2 transition-all cursor-pointer',
                 i % 2 === 0 ? 'rotate-2' : '-rotate-2'
               ]"
@@ -88,7 +88,7 @@ const emit = defineEmits<{
           <div class="absolute inset-0 bg-gradient-to-br from-core/20 to-yellow/20 blur-3xl"></div>
 
           <!-- Animated 3D Element -->
-          <div class="relative w-full h-full border-4 border-black bg-black/5 rotate-3 shadow-brutal-xl">
+          <div class="relative w-full h-full border-4 border-black bg-foreground/5 rotate-3 shadow-brutal-xl">
             <svg viewBox="0 0 400 400" class="w-full h-full">
               <!-- Grid -->
               <g stroke="#FF4D00" stroke-width="2" opacity="0.3">

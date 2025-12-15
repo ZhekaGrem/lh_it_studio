@@ -44,11 +44,11 @@ const emit = defineEmits<{
 <template>
   <div
     v-if="!isComplete"
-    class="fixed inset-0 z-50 bg-black flex items-center justify-center font-mono"
+    class="fixed inset-0 z-50 bg-foreground flex items-center justify-center font-mono"
   >
     <div class="w-full max-w-2xl px-4">
       <!-- Terminal header -->
-      <div class="border-4 border-core bg-black p-6">
+      <div class="border-4 border-core bg-foreground p-6">
         <div class="flex items-center gap-2 mb-4 border-b-2 border-core pb-2">
           <div class="w-3 h-3 rounded-full bg-red-500"></div>
           <div class="w-3 h-3 rounded-full bg-yellow-500"></div>

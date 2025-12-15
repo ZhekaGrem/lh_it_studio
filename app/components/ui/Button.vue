@@ -47,13 +47,13 @@ const buttonClasses = computed(() => {
       'hover:rotate-0'
     ],
     black: [
-      'bg-black text-white',
+      'bg-ink text-white',
       'hover:bg-core hover:text-black hover:shadow-brutal-md',
       'hover:rotate-0'
     ],
     outline: [
       'bg-transparent text-black',
-      'hover:bg-black hover:text-white',
+      'hover:bg-ink hover:text-white',
       'hover:rotate-0'
     ]
   }

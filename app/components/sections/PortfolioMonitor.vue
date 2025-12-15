@@ -1,48 +1,25 @@
 <script setup lang="ts">
 
-import type { ProjectSection } from '~/types/portfolio'
+import type { Project, ProjectSection } from '~/types/portfolio'
+import { projects as allProjects } from '~/data/projects'
+
+// --- Mapper: Project → ProjectSection ---
+const mapProjectToSection = (p: Project): ProjectSection => ({
+  id: p.id,
+  title: p.title,
+  category: p.category,
+  description: p.shortDescription,
+  tech: p.technologies.map(t => t.name),
+  image: p.image,
+  url: `/projects/${p.id}`,
+  stats: p.results.slice(0, 2).map(r => ({
+    label: r.metric,
+    value: r.value
+  }))
+})
+
 // --- Data ---
-const projects: ProjectSection[] = [
-  {
-    id: '01',
-    title: 'Щільний Drill Shop',
-    category: 'E-Commerce',
-    description: 'Інтернет-магазин мерчу української underground музики. Next.js 15, Stripe, адаптивний дизайн.',
-    tech: ['Next.js', 'TypeScript', 'Tailwind', 'Stripe'],
-    image: 'https://placehold.co/800x600/111/FF4D00?text=Drill+Shop', // Placeholder
-    url: '#',
-    stats: [
-      { label: 'Конверсія', value: '+45%' },
-      { label: 'Швидкість', value: '1.2s' }
-    ]
-  },
-  {
-    id: '02',
-    title: 'CRM для Клініки',
-    category: 'Web App',
-    description: 'Система управління пацієнтами з AI-асистентом, автоматизація запису, інтеграція з Telegram.',
-    tech: ['React', 'Node.js', 'PostgreSQL', 'AI'],
-    image: 'https://placehold.co/800x600/111/00FF00?text=CRM+System',
-    url: '#',
-    stats: [
-      { label: 'Економія часу', value: '60%' },
-      { label: 'Користувачів', value: '500+' }
-    ]
-  },
-  {
-    id: '03',
-    title: 'Telegram Bot AI',
-    category: 'Automation',
-    description: 'Бот-консультант для e-commerce з GPT-4, обробка замовлень, інтеграція з CRM та платіжними системами.',
-    tech: ['Python', 'GPT-4', 'RabbitMQ', 'Redis'],
-    image: 'https://placehold.co/800x600/111/FFD700?text=AI+Bot',
-    url: '#',
-    stats: [
-      { label: 'Відповідей/день', value: '1000+' },
-      { label: 'Точність', value: '95%' }
-    ]
-  }
-]
+const projects: ProjectSection[] = allProjects.map(mapProjectToSection)
 
 // --- State ---
 const currentIndex = ref(0)
@@ -108,7 +85,7 @@ onUnmounted(() => {
           <div class="inline-block bg-yellow px-6 py-3 border-4 border-white rotate-2 shadow-brutal-core mb-4">
             <h2 class="text-4xl md:text-5xl font-bold font-display text-ink uppercase">Проєкти</h2>
           </div>
-          <p class="text-xl md:text-2xl font-bold text-white/70 font-display">
+          <p class="text-xl md:text-2xl font-bold text-white/70 font-display font-pixel">
             <span class="text-core">///</span> Наші реалізовані рішення
           </p>
         </div>
@@ -131,7 +108,7 @@ onUnmounted(() => {
             <span class="text-xs font-bold text-core font-mono tracking-widest">LH_STUDIO</span>
           </div>
 
-          <div class="relative bg-black border-4 border-[#1A1A1A] rounded-xl overflow-hidden min-h-[500px] md:min-h-[600px]">
+          <div class="relative bg-ink border-4 border-[#1A1A1A] rounded-xl overflow-hidden min-h-[500px] md:min-h-[600px]">
             
             <div class="absolute inset-0 pointer-events-none z-20 opacity-10">
               <div class="absolute inset-0 bg-gradient-to-b from-transparent via-white to-transparent animate-scanline" />
@@ -177,7 +154,7 @@ onUnmounted(() => {
                     <span 
                       v-for="(tech, i) in currentProject.tech" 
                       :key="i"
-                      class="px-3 py-1 bg-black border-2 border-neon text-neon text-xs font-bold font-mono uppercase"
+                      class="px-3 py-1 bg-ink border-2 border-neon text-neon text-xs font-bold font-mono uppercase"
                     >
                       {{ tech }}
                     </span>
@@ -188,7 +165,7 @@ onUnmounted(() => {
                     class="grid grid-cols-2 gap-4 mb-8"
                     :class="direction === 'right' ? 'animate-fade-in-up-delayed-2' : 'animate-fade-in-down-delayed-2'"
                   >
-                    <div v-for="(stat, i) in currentProject.stats" :key="i" class="bg-black/50 border-2 border-core p-3">
+                    <div v-for="(stat, i) in currentProject.stats" :key="i" class="bg-ink/50 border-2 border-core p-3">
                       <p class="text-2xl font-bold text-core mb-1">{{ stat.value }}</p>
                       <p class="text-xs font-bold text-white/60 uppercase font-mono">{{ stat.label }}</p>
                     </div>
@@ -227,7 +204,7 @@ onUnmounted(() => {
               <button 
                 @click="handlePrev" 
                 :disabled="isAnimating"
-                class="w-12 h-12 bg-black border-4 border-white text-white hover:bg-core hover:text-ink hover:border-core disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center justify-center rotate-2 hover:rotate-0 shadow-sm"
+                class="w-12 h-12 bg-ink border-4 border-white text-white hover:bg-core hover:text-ink hover:border-core disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center justify-center rotate-2 hover:rotate-0 shadow-sm"
               >
                 <ChevronLeft class="w-6 h-6" />
               </button>

@@ -161,7 +161,7 @@ export const projects: Project[] = [
       { name: 'QR Generator', icon: '📱', color: 'bg-purple-600' },
       { name: 'MongoDB', icon: '🍃', color: 'bg-green-700' },
       { name: 'Vue 3', icon: '⚡', color: 'bg-green-500' },
-      { name: 'Socket.io', icon: '🔌', color: 'bg-black' }
+      { name: 'Socket.io', icon: '🔌', color: 'bg-foreground' }
     ],
     features: [
       'Реєстрація учасників через Telegram в кілька кліків',

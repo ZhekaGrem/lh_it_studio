@@ -12,7 +12,9 @@
       "Bash(npm run prepare:*)",
       "Bash(npm run dev:*)",
       "Bash(ls:*)",
-      "Bash(npm run build:*)"
+      "Bash(npm run build:*)",
+      "Bash(curl:*)",
+      "Bash(npx shadcn-vue@latest add:*)"
     ]
   }
 }
