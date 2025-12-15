@@ -41,13 +41,13 @@ const emit = defineEmits<{
       <!-- Navigation -->
       <nav :class="['hidden md:flex items-center gap-8', isScrolled
         ? 'text-white' : 'text-ink']">
-        <a href="#services" class=" hover:text-core font-bold transition-colors uppercase tracking-wide">
+        <a href="#services" class=" hover:text-core font-pixel transition-colors uppercase tracking-wide">
           Послуги
         </a>
-        <a href="#portfolio" class=" hover:text-core font-bold transition-colors uppercase tracking-wide">
+        <a href="#portfolio" class=" hover:text-core font-pixel transition-colors uppercase tracking-wide">
           Проєкти
         </a>
-        <a href="#contact" class=" hover:text-core font-bold transition-colors uppercase tracking-wide">
+        <a href="#contact" class=" hover:text-core font-pixel transition-colors uppercase tracking-wide">
           Контакти
         </a>
       </nav>
