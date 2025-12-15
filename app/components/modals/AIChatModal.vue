@@ -93,8 +93,8 @@ const handleQuickAction = (action: string) => {
         <!-- Header -->
         <div class="bg-yellow px-6 py-4 border-b-4 border-black flex items-center justify-between">
           <div class="flex items-center gap-3">
-            <div class="w-12 h-12 bg-foreground border-4 border-black flex items-center justify-center text-2xl rotate-3">
-              🤖
+            <div class="w-12 h-12 bg-foreground border-4 border-black flex items-center justify-center rotate-3">
+              <img src="/icons/bot.svg" alt="AI Bot" class="w-8 h-8" />
             </div>
             <div>
               <h2 class="text-2xl font-bold font-display text-black uppercase">

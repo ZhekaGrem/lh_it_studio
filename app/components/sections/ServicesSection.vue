@@ -2,7 +2,7 @@
 const services = [
   {
     title: 'ВЕБ-РОЗРОБКА',
-    icon: '🖥️',
+    icon: '/icons/computer.svg',
     items: ['Лендінги', 'Інтернет-магазини', 'CRM-системи', 'Корпоративні сайти'],
     price: '8K+',
     bgColor: 'bg-neon',
@@ -13,7 +13,7 @@ const services = [
   },
   {
     title: 'ТЕЛЕГРАМ БОТИ',
-    icon: '🤖',
+    icon: '/icons/bot.svg',
     items: ['Чат-боти', 'Автоворонки', 'Support AI', 'Інтеграції CRM'],
     price: '5K+',
     bgColor: 'bg-yellow',
@@ -24,7 +24,7 @@ const services = [
   },
   {
     title: 'AI АГЕНТИ',
-    icon: '🧠',
+    icon: '/icons/brain.svg',
     items: ['АІ Агенти', 'Аналітика даних', 'Автоматизація', 'ML рішення'],
     price: 'Custom',
     bgColor: 'bg-foreground',
@@ -82,7 +82,7 @@ const emit = defineEmits<{
               'group-hover:rotate-0',
               'transition-transform'
             ]">
-              {{ service.icon }}
+              <img :src="service.icon" :alt="service.title" class="w-12 h-12" />
             </div>
           </div>
 

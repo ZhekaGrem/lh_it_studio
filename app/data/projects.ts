@@ -13,8 +13,8 @@ export const projects: Project[] = [
       { name: 'Vue 3', icon: '⚡', color: 'bg-green-500' },
       { name: 'Nuxt', icon: '🚀', color: 'bg-green-600' },
       { name: 'Node.js', icon: '🟢', color: 'bg-green-700' },
-      { name: 'PostgreSQL', icon: '🐘', color: 'bg-blue-600' },
-      { name: 'Telegram Bot API', icon: '✈️', color: 'bg-blue-500' },
+      { name: 'PostgreSQL', icon: '/icons/sql.svg', color: 'bg-blue-600' },
+      { name: 'Telegram Bot API', icon: '/icons/telegram.svg', color: 'bg-blue-500' },
       { name: 'Stripe', icon: '💳', color: 'bg-purple-600' }
     ],
     features: [
@@ -58,12 +58,12 @@ export const projects: Project[] = [
     Використовуючи можливості GPT-4 та Claude AI, система здатна не просто збирати дані, а й розуміти контекст, класифікувати інформацію, виявляти тренди та надавати структуровані звіти.`,
     category: 'AI & Automation',
     technologies: [
-      { name: 'Python', icon: '🐍', color: 'bg-yellow-600' },
-      { name: 'GPT-4', icon: '🧠', color: 'bg-purple-600' },
-      { name: 'Claude AI', icon: '🤖', color: 'bg-orange-600' },
+      { name: 'Python', icon: '/icons/python.svg', color: 'bg-yellow-600' },
+      { name: 'GPT-4', icon: '/icons/brain.svg', color: 'bg-purple-600' },
+      { name: 'Claude AI', icon: '/icons/bot.svg', color: 'bg-orange-600' },
       { name: 'BeautifulSoup', icon: '🍜', color: 'bg-green-600' },
       { name: 'Selenium', icon: '🌐', color: 'bg-green-500' },
-      { name: 'MongoDB', icon: '🍃', color: 'bg-green-700' }
+      { name: 'MongoDB', icon: '/icons/mongo.svg', color: 'bg-green-700' }
     ],
     features: [
       'Автоматичний парсинг веб-сайтів, соціальних мереж, форумів',
@@ -111,7 +111,7 @@ export const projects: Project[] = [
       { name: 'Three.js', icon: '🎨', color: 'bg-blue-500' },
       { name: 'Mapbox', icon: '🗺️', color: 'bg-blue-600' },
       { name: 'Node.js', icon: '🟢', color: 'bg-green-700' },
-      { name: 'PostgreSQL', icon: '🐘', color: 'bg-blue-600' }
+      { name: 'PostgreSQL', icon: '/icons/sql.svg', color: 'bg-blue-600' }
     ],
     features: [
       'Інтерактивні 3D-тури по квартирах',
@@ -157,9 +157,9 @@ export const projects: Project[] = [
     category: 'Event Management',
     technologies: [
       { name: 'Node.js', icon: '🟢', color: 'bg-green-700' },
-      { name: 'Telegram Bot API', icon: '✈️', color: 'bg-blue-500' },
+      { name: 'Telegram Bot API', icon: '/icons/telegram.svg', color: 'bg-blue-500' },
       { name: 'QR Generator', icon: '📱', color: 'bg-purple-600' },
-      { name: 'MongoDB', icon: '🍃', color: 'bg-green-700' },
+      { name: 'MongoDB', icon: '/icons/mongo.svg', color: 'bg-green-700' },
       { name: 'Vue 3', icon: '⚡', color: 'bg-green-500' },
       { name: 'Socket.io', icon: '🔌', color: 'bg-foreground' }
     ],
@@ -206,13 +206,13 @@ export const projects: Project[] = [
     Бот навчається на ваших попередніх відповідях, розуміє контекст бізнесу та надає персоналізовані відповіді, які не відрізнити від людських. Система автоматично кваліфікує ліди, відповідає на типові питання, збирає контактні дані та передає складні запити менеджерам.`,
     category: 'AI & Automation',
     technologies: [
-      { name: 'GPT-4', icon: '🧠', color: 'bg-purple-600' },
-      { name: 'Claude AI', icon: '🤖', color: 'bg-orange-600' },
+      { name: 'GPT-4', icon: '/icons/brain.svg', color: 'bg-purple-600' },
+      { name: 'Claude AI', icon: '/icons/bot.svg', color: 'bg-orange-600' },
       { name: 'Node.js', icon: '🟢', color: 'bg-green-700' },
-      { name: 'Python', icon: '🐍', color: 'bg-yellow-600' },
+      { name: 'Python', icon: '/icons/python.svg', color: 'bg-yellow-600' },
       { name: 'Redis', icon: '⚡', color: 'bg-red-600' },
       { name: 'Meta API', icon: '📘', color: 'bg-blue-600' },
-      { name: 'Telegram API', icon: '✈️', color: 'bg-blue-500' }
+      { name: 'Telegram API', icon: '/icons/telegram.svg', color: 'bg-blue-500' }
     ],
     features: [
       'Підключення до Instagram, Telegram, Facebook, WhatsApp',

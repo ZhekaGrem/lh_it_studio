@@ -32,8 +32,8 @@ const handleClick = () => {
       <!-- Image Section -->
       <div class="relative h-64 overflow-hidden border-b-4 border-black bg-ink">
         <!-- Placeholder for project image -->
-        <div class="absolute inset-0 flex items-center justify-center text-8xl opacity-20">
-          {{ project.technologies[0]?.icon }}
+        <div v-if="project.technologies[0]?.icon" class="absolute inset-0 flex items-center justify-center opacity-20">
+          <img :src="project.technologies[0].icon" :alt="project.technologies[0].name" class="w-32 h-32" />
         </div>
 
         <!-- Category Badge -->
@@ -70,9 +70,11 @@ const handleClick = () => {
           <span
             v-for="tech in project.technologies.slice(0, 4)"
             :key="tech.name"
-            class="px-2 py-1 text-xs font-bold border-2 border-black bg-white"
+            class="px-2 py-1 text-xs font-bold border-2 border-black bg-white flex items-center gap-1"
           >
-            {{ tech.icon }} {{ tech.name }}
+            <img v-if="tech.icon.startsWith('/')" :src="tech.icon" :alt="tech.name" class="w-4 h-4" />
+            <span v-else>{{ tech.icon }}</span>
+            {{ tech.name }}
           </span>
           <span
             v-if="project.technologies.length > 4"

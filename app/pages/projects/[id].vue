@@ -78,9 +78,11 @@ const goBack = () => {
               <span
                 v-for="tech in project.technologies.slice(0, 4)"
                 :key="tech.name"
-                class="px-4 py-2 bg-ink border-2 border-neon text-neon text-sm font-bold font-mono uppercase"
+                class="px-4 py-2 bg-ink border-2 border-neon text-neon text-sm font-bold font-mono uppercase flex items-center gap-2"
               >
-                {{ tech.icon }} {{ tech.name }}
+                <img v-if="tech.icon.startsWith('/')" :src="tech.icon" :alt="tech.name" class="w-5 h-5" />
+                <span v-else>{{ tech.icon }}</span>
+                {{ tech.name }}
               </span>
             </div>
           </div>
@@ -231,7 +233,8 @@ const goBack = () => {
             class="px-6 py-4 bg-bg border-4 border-black shadow-brutal hover:shadow-brutal-lg hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all"
           >
             <div class="flex items-center gap-3">
-              <span class="text-3xl">{{ tech.icon }}</span>
+              <img v-if="tech.icon.startsWith('/')" :src="tech.icon" :alt="tech.name" class="w-10 h-10" />
+              <span v-else class="text-3xl">{{ tech.icon }}</span>
               <span class="text-lg font-bold text-black uppercase">{{ tech.name }}</span>
             </div>
           </div>

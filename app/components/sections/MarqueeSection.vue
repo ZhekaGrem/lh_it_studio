@@ -2,16 +2,16 @@
 const text = "WEB DEVELOPMENT /// TELEGRAM BOTS /// AI SOLUTIONS /// AUTOMATION ///"
 
 const techStack = [
-  { name: 'PostgreSQL', icon: '🐘', color: '#FFD700' },
-  { name: 'MongoDB', icon: '🍃', color: '#00FF00' },
-  { name: 'RabbitMQ', icon: '🐰', color: '#FF006E' },
-  { name: 'Java', icon: '☕', color: '#FFD700' },
-  { name: 'Spring', icon: '🌱', color: '#00FF00' },
-  { name: 'Python', icon: '🐍', color: '#FFD700' },
-  { name: 'React', icon: '⚛️', color: '#00F0FF' },
-  { name: 'Telegram', icon: '✈️', color: '#FFD700' },
-  { name: 'AI', icon: '🤖', color: '#FF006E' },
-  { name: 'Auto', icon: '⚡', color: '#00FF00' }
+  { name: 'SQL', icon: '/icons/sql.svg', color: '#FFD700' },
+  { name: 'Mongo', icon: '/icons/mongo.svg', color: '#00FF00' },
+  { name: 'Queue', icon: '/icons/queue.svg', color: '#FF006E' },
+  { name: 'Java', icon: '/icons/java.svg', color: '#FFD700' },
+  { name: 'Python', icon: '/icons/python.svg', color: '#FFD700' },
+  { name: 'N8N', icon: '/icons/n8n.svg', color: '#FFD700' },
+  { name: 'JS', icon: '/icons/js.svg', color: '#00F0FF' },
+  { name: 'Telegram', icon: '/icons/telegram.svg', color: '#FFD700' },
+  { name: 'AI', icon: '/icons/bot.svg', color: '#FF006E' },
+  { name: 'Auto', icon: '/icons/auto.svg', color: '#00FF00' }
 ]
 </script>
 
@@ -65,7 +65,7 @@ const techStack = [
               transition-all duration-200
             "
           >
-            <span class="text-4xl">{{ tech.icon }}</span>
+            <img :src="tech.icon" :alt="tech.name" class="w-10 h-10 sm:w-16 sm:h-16" />
             <span class="text-xs font-bold text-black mt-1 uppercase">{{ tech.name }}</span>
           </div>
         </div>

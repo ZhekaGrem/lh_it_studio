@@ -1,11 +1,12 @@
 <script setup lang="ts">
 const TERMINAL_LINES = [
   '> Initializing L&H Studio...',
-  '> Loading dependencies... [████████] 100%',
+  '> Loading dependencies... [███████ ] 99%',
   '> Connecting to server... OK',
   '> Fetching brutalist assets...',
-  '> Compiling Neo-Brutalism styles... ✓',
-  '> Rendering chaos... COMPLETE',
+  '> Loading dependencies... [████████] 100%',
+  '> Compiling наш сайт ✓',
+  '> Чаклуємо 01000001 01100011 01100011 01101001 01101111',
   '> Welcome to L&H Studio.'
 ]
 
@@ -16,7 +17,7 @@ onMounted(() => {
   let currentIndex = 0
   const interval = setInterval(() => {
     if (currentIndex < TERMINAL_LINES.length) {
-      lines.value = [...lines.value, TERMINAL_LINES[currentIndex]]
+      lines.value = [...lines.value, TERMINAL_LINES[currentIndex]!]
       currentIndex++
     } else {
       setIsComplete(true)

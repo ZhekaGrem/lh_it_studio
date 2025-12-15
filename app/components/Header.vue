@@ -57,7 +57,7 @@ const emit = defineEmits<{
 
         <!-- AI Chat Button -->
         <Button variant="yellow" size="sm" rotation="rotate-2" @click="emit('openAIChat')" class="relative">
-          🤖 AI ЧАТ
+          <img src="/icons/bot.svg" alt="AI Bot" class="w-5 h-5 sm:w-7 sm:h-7 inline-block " /> AI ЧАТ
           <div class="absolute -top-2 -right-2 w-4 h-4 bg-core rounded-full border-2 border-black animate-pulse"></div>
         </Button>
 
@@ -66,13 +66,13 @@ const emit = defineEmits<{
           Консультація
         </Button>
       </div>
-
-      <!-- Mobile Menu Toggle -->
+<!-- 
+      Mobile Menu Toggle
       <button class="md:hidden text-white">
         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
-      </button>
+      </button> -->
 
     </div>
   </header>

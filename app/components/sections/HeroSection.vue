@@ -69,15 +69,15 @@ const emit = defineEmits<{
           <!-- Tech Icons (Pixelated) -->
           <div class="flex gap-6 pt-4">
             <div
-              v-for="(icon, i) in ['🖥️', '🤖', '🧠']"
+              v-for="(icon, i) in ['/icons/computer.svg', '/icons/bot.svg', '/icons/brain.svg']"
               :key="i"
               :class="[
-                'w-16 h-16 bg-foreground border-4 border-black flex items-center justify-center text-3xl',
+                'w-16 h-16 bg-foreground border-4 border-black flex items-center justify-center',
                 'hover:bg-core hover:-translate-y-2 transition-all cursor-pointer',
                 i % 2 === 0 ? 'rotate-2' : '-rotate-2'
               ]"
             >
-              {{ icon }}
+              <img :src="icon" :alt="`Tech ${i + 1}`" class="w-10 h-10" />
             </div>
           </div>
 
