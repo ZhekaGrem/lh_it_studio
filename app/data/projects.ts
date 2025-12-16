@@ -44,7 +44,7 @@ export const projects: Project[] = [
         description: 'Через систему лояльності та персоналізацію'
       }
     ],
-    image: '/images/projects/ecommerce-crm.jpg',
+    image: '/images/projects/images.png',
     backgroundColor: 'bg-yellow',
     rotation: 'rotate-2'
   },
@@ -92,7 +92,7 @@ export const projects: Project[] = [
         description: 'Записів на день в автоматичному режимі'
       }
     ],
-    image: '/images/projects/ai-scraper.jpg',
+    image: '/images/projects/images.png',
     backgroundColor: 'bg-core',
     rotation: '-rotate-2'
   },
@@ -142,7 +142,7 @@ export const projects: Project[] = [
         description: 'З відвідувачів у потенційних покупців'
       }
     ],
-    image: '/images/projects/real-estate.jpg',
+    image: '/images/projects/images.png',
     backgroundColor: 'bg-pink',
     rotation: 'rotate-1'
   },
@@ -192,7 +192,7 @@ export const projects: Project[] = [
         description: 'Успішно організованих івентів'
       }
     ],
-    image: '/images/projects/event-bot.jpg',
+    image: '/images/projects/images.png',
     backgroundColor: 'bg-neon',
     rotation: '-rotate-1'
   },
@@ -243,7 +243,7 @@ export const projects: Project[] = [
         description: 'Клієнтів оцінюють відповіді як корисні'
       }
     ],
-    image: '/images/projects/ai-auto-reply.jpg',
+    image: '/images/projects/images.png',
     backgroundColor: 'bg-bg',
     rotation: 'rotate-2'
   }

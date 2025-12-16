@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { X } from 'lucide-vue-next'
-import { useUaPhone } from '@/composables/useUaPhone';
-const { onPhoneFocus, onPhoneInput } = useUaPhone();
+import { useUaPhone } from '@/composables/useUaPhone'
+import { useTelegram } from '@/composables/useTelegram'
+
+const { onPhoneFocus, onPhoneInput } = useUaPhone()
+const { sendContactForm } = useTelegram()
 interface Props {
   isOpen: boolean
 }
@@ -10,13 +13,15 @@ const props = defineProps<Props>()
 
 const formData = reactive({
   name: '',
-  phone: '',
+  contactMethod: 'phone' as 'phone' | 'email' | 'telegram' | 'linkedin',
+  contactValue: '',
   service: '',
   message: ''
 })
 
 const isSubmitting = ref(false)
 const isSuccess = ref(false)
+const errorMessage = ref('')
 
 const emit = defineEmits<{
   close: []
@@ -25,18 +30,23 @@ const emit = defineEmits<{
 const handleSubmit = async (e: Event) => {
   e.preventDefault()
   isSubmitting.value = true
+  errorMessage.value = ''
 
-  // TODO: Telegram API або email
-  await new Promise(resolve => setTimeout(resolve, 1500))
+  const result = await sendContactForm(formData)
 
   isSubmitting.value = false
-  isSuccess.value = true
 
-  setTimeout(() => {
-    emit('close')
-    isSuccess.value = false
-    Object.assign(formData, { name: '', phone: '', service: '', message: '' })
-  }, 2000)
+  if (result.success) {
+    isSuccess.value = true
+
+    setTimeout(() => {
+      emit('close')
+      isSuccess.value = false
+      Object.assign(formData, { name: '', contactMethod: 'phone', contactValue: '', service: '', message: '' })
+    }, 2000)
+  } else {
+    errorMessage.value = 'Помилка відправки. Спробуйте ще раз.'
+  }
 }
 </script>
 
@@ -80,18 +90,96 @@ const handleSubmit = async (e: Event) => {
               " placeholder="Ваше ім'я" />
           </div>
 
-          <!-- Phone Input -->
+          <!-- Contact Method Selection -->
           <div class="relative -rotate-1">
-            <label class="block text-sm font-bold text-black mb-2 uppercase tracking-wide">
-              /// Телефон
+            <label class="block text-sm font-bold text-black mb-3 uppercase tracking-wide">
+              /// Спосіб зв'язку
             </label>
-            <input :value="formData.phone" @input="formData.phone = onPhoneInput($event)" @focus="onPhoneFocus"
-              type="tel" inputmode="tel" required class="
-                w-full px-4 py-3 bg-white border-4 border-black
-                focus:border-yellow focus:shadow-brutal-yellow
-                outline-none transition-all duration-200
-                font-bold text-lg
-              " placeholder="+380" />
+            <div class="grid grid-cols-2 gap-3 mb-4">
+              <label
+                :class="[
+                  'flex items-center justify-center px-4 py-3 border-4 border-black cursor-pointer transition-all duration-200',
+                  formData.contactMethod === 'phone'
+                    ? 'bg-core shadow-brutal'
+                    : 'bg-white hover:bg-yellow'
+                ]"
+              >
+                <input type="radio" v-model="formData.contactMethod" value="phone" class="sr-only" />
+                <span class="font-bold text-sm uppercase">Телефон</span>
+              </label>
+              <label
+                :class="[
+                  'flex items-center justify-center px-4 py-3 border-4 border-black cursor-pointer transition-all duration-200',
+                  formData.contactMethod === 'email'
+                    ? 'bg-core shadow-brutal'
+                    : 'bg-white hover:bg-yellow'
+                ]"
+              >
+                <input type="radio" v-model="formData.contactMethod" value="email" class="sr-only" />
+                <span class="font-bold text-sm uppercase">Email</span>
+              </label>
+              <label
+                :class="[
+                  'flex items-center justify-center px-4 py-3 border-4 border-black cursor-pointer transition-all duration-200',
+                  formData.contactMethod === 'telegram'
+                    ? 'bg-core shadow-brutal'
+                    : 'bg-white hover:bg-yellow'
+                ]"
+              >
+                <input type="radio" v-model="formData.contactMethod" value="telegram" class="sr-only" />
+                <span class="font-bold text-sm uppercase">Telegram</span>
+              </label>
+              <label
+                :class="[
+                  'flex items-center justify-center px-4 py-3 border-4 border-black cursor-pointer transition-all duration-200',
+                  formData.contactMethod === 'linkedin'
+                    ? 'bg-core shadow-brutal'
+                    : 'bg-white hover:bg-yellow'
+                ]"
+              >
+                <input type="radio" v-model="formData.contactMethod" value="linkedin" class="sr-only" />
+                <span class="font-bold text-sm uppercase">LinkedIn</span>
+              </label>
+            </div>
+
+            <!-- Dynamic Contact Input -->
+            <input
+              v-if="formData.contactMethod === 'phone'"
+              :value="formData.contactValue"
+              @input="formData.contactValue = onPhoneInput($event)"
+              @focus="onPhoneFocus"
+              type="tel"
+              inputmode="tel"
+              required
+              class="w-full px-4 py-3 bg-white border-4 border-black focus:border-yellow focus:shadow-brutal-yellow outline-none transition-all duration-200 font-bold text-lg"
+              placeholder="+380"
+            />
+            <input
+              v-else-if="formData.contactMethod === 'email'"
+              v-model="formData.contactValue"
+              type="email"
+              inputmode="email"
+              required
+              class="w-full px-4 py-3 bg-white border-4 border-black focus:border-yellow focus:shadow-brutal-yellow outline-none transition-all duration-200 font-bold text-lg"
+              placeholder="your@email.com"
+            />
+            <input
+              v-else-if="formData.contactMethod === 'telegram'"
+              v-model="formData.contactValue"
+              type="text"
+              required
+              class="w-full px-4 py-3 bg-white border-4 border-black focus:border-yellow focus:shadow-brutal-yellow outline-none transition-all duration-200 font-bold text-lg"
+              placeholder="@username"
+            />
+            <input
+              v-else-if="formData.contactMethod === 'linkedin'"
+              v-model="formData.contactValue"
+              type="url"
+              inputmode="url"
+              required
+              class="w-full px-4 py-3 bg-white border-4 border-black focus:border-yellow focus:shadow-brutal-yellow outline-none transition-all duration-200 font-bold text-lg"
+              placeholder="linkedin.com/in/username"
+            />
           </div>
 
           <!-- Service Select -->
@@ -131,6 +219,11 @@ const handleSubmit = async (e: Event) => {
             :disabled="isSubmitting || isSuccess">
             {{ isSubmitting ? '/// ВІДПРАВКА...' : isSuccess ? '✓ ВІДПРАВЛЕНО!' : 'ВІДПРАВИТИ ЗАЯВКУ' }}
           </Button>
+
+          <!-- Error Message -->
+          <div v-if="errorMessage" class="bg-error border-4 border-black px-4 py-3 -rotate-1">
+            <p class="text-white font-bold text-center">{{ errorMessage }}</p>
+          </div>
 
         </form>
 

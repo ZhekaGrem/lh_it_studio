@@ -1,8 +1,9 @@
 <script setup lang="ts">
+// AI Chat composable (централізований стан)
+const { isOpen: isAIChatOpen, openChat: openAIChat, closeChat: closeAIChat } = useAiChat()
 
-// Modal states
+// Consultation modal state
 const isConsultationOpen = ref(false)
-const isAIChatOpen = ref(false)
 
 const openConsultation = () => {
   isConsultationOpen.value = true
@@ -10,14 +11,6 @@ const openConsultation = () => {
 
 const closeConsultation = () => {
   isConsultationOpen.value = false
-}
-
-const openAIChat = () => {
-  isAIChatOpen.value = true
-}
-
-const closeAIChat = () => {
-  isAIChatOpen.value = false
 }
 </script>
 
@@ -39,6 +32,6 @@ const closeAIChat = () => {
 
     <!-- Modals -->
     <ConsultationModal :is-open="isConsultationOpen" @close="closeConsultation" />
-    <AIChatModal :is-open="isAIChatOpen" @close="closeAIChat" />
+    <AIChatModal />
   </div>
 </template>

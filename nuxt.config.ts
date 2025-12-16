@@ -35,6 +35,12 @@ export default defineNuxtConfig({
 
   // Runtime Config
   runtimeConfig: {
+    // Server-side only (безпечно для API keys)
+    openaiApiKey: process.env.NUXT_OPENAI_API_KEY || '',
+    assistantId: process.env.NUXT_ASSISTANT_ID || '',
+    telegramBotToken: process.env.TELEGRAM_BOT_TOKEN || '',
+    telegramChatId: process.env.TELEGRAM_CHAT_ID || '',
+
     public: {
       // Google Analytics ID
       gtag: process.env.NUXT_PUBLIC_GTAG_ID || '',

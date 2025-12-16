@@ -2,7 +2,7 @@
 
 import type { Project, ProjectSection } from '~/types/portfolio'
 import { projects as allProjects } from '~/data/projects'
-
+import { ChevronLeft, ChevronRight } from 'lucide-vue-next'
 // --- Mapper: Project → ProjectSection ---
 const mapProjectToSection = (p: Project): ProjectSection => ({
   id: p.id,
@@ -85,8 +85,8 @@ onUnmounted(() => {
           <div class="inline-block bg-yellow px-6 py-3 border-4 border-white rotate-2 shadow-brutal-core mb-4">
             <h2 class="text-4xl md:text-5xl font-bold font-display text-ink uppercase">Проєкти</h2>
           </div>
-          <p class="text-xl md:text-2xl font-bold text-white/70 font-display font-pixel">
-            <span class="text-core">///</span> Наші реалізовані рішення
+          <p class="text-xl md:text-2xl font-bold text-white/70 font-display ">
+            <span class="text-core">///</span>Наші реалізовані рішення
           </p>
         </div>
         <div class="bg-core px-6 py-3 border-4 border-white -rotate-2 shadow-brutal">

@@ -19,7 +19,7 @@ const { onPhoneFocus, onPhoneInput } = useUaPhone();
 </script>
 
 <template>
-  <footer id="contact" class="bg-bg py-20 relative overflow-hidden">
+  <footer id="contact" class="bg-bg relative overflow-hidden">
 
     <!-- Decorative Elements -->
     <div class="absolute top-10 right-20 w-40 h-40 bg-yellow border-4 border-black rotate-45 -z-10 opacity-20"></div>

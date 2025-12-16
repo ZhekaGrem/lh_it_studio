@@ -43,9 +43,10 @@ const buttonClasses = computed(() => {
     ],
     yellow: [
       'bg-yellow text-black',
-      'hover:shadow-brutal-xl',
+      'hover:shadow-brutal-lg',
       'hover:rotate-0'
     ],
+  
     black: [
       'bg-ink text-white',
       'hover:bg-core hover:text-black hover:shadow-brutal-md',

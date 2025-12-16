@@ -15,7 +15,7 @@ onUnmounted(() => {
 
 const emit = defineEmits<{
   openConsultation: []
-  openAIChat: []
+  openAiChat: []
 }>()
 </script>
 
@@ -56,7 +56,7 @@ const emit = defineEmits<{
       <div class="flex items-center gap-4">
 
         <!-- AI Chat Button -->
-        <Button variant="yellow" size="sm" rotation="rotate-2" @click="emit('openAIChat')" class="relative">
+        <Button variant="yellow" size="sm" rotation="rotate-2" @click="emit('openAiChat')" class="relative">
           <img src="/icons/bot.svg" alt="AI Bot" class="w-5 h-5 sm:w-7 sm:h-7 inline-block " /> AI ЧАТ
           <div class="absolute -top-2 -right-2 w-4 h-4 bg-core rounded-full border-2 border-black animate-pulse"></div>
         </Button>

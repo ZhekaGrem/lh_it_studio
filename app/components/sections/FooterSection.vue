@@ -85,23 +85,101 @@
                 " placeholder="Ваше ім'я" />
             </div>
 
-            <!-- Phone Input -->
+            <!-- Contact Method Selection -->
             <div class="group">
-              <label for="phone" class="
+              <label class="
                   block font-display font-bold text-sm uppercase tracking-wider
-                  text-ink mb-3
+                  text-ink mb-4
                 ">
-                ТЕЛЕФОН
+                СПОСІБ ЗВ'ЯЗКУ
               </label>
-              <input id="phone" :value="formData.phone" @input="formData.phone = onPhoneInput($event)"
-                @focus="onPhoneFocus" type="tel" inputmode="tel" required class="
-                  w-full bg-transparent
-                  border-0 border-b-4 border-ink
-                  font-body text-xl md:text-2xl text-ink
-                  focus:border-core focus:outline-none
-                  transition-colors duration-200
-                  pb-2
-                " placeholder="+380" />
+
+              <!-- Radio Buttons Grid -->
+              <div class="grid grid-cols-2 gap-3 mb-6">
+                <label
+                  :class="[
+                    'flex items-center justify-center px-4 py-3 border-4 border-ink cursor-pointer transition-all duration-200',
+                    formData.contactMethod === 'phone'
+                      ? 'bg-core shadow-brutal'
+                      : 'bg-transparent hover:bg-yellow'
+                  ]"
+                >
+                  <input type="radio" v-model="formData.contactMethod" value="phone" class="sr-only" />
+                  <span class="font-display font-bold text-sm uppercase">Телефон</span>
+                </label>
+                <label
+                  :class="[
+                    'flex items-center justify-center px-4 py-3 border-4 border-ink cursor-pointer transition-all duration-200',
+                    formData.contactMethod === 'email'
+                      ? 'bg-core shadow-brutal'
+                      : 'bg-transparent hover:bg-yellow'
+                  ]"
+                >
+                  <input type="radio" v-model="formData.contactMethod" value="email" class="sr-only" />
+                  <span class="font-display font-bold text-sm uppercase">Email</span>
+                </label>
+                <label
+                  :class="[
+                    'flex items-center justify-center px-4 py-3 border-4 border-ink cursor-pointer transition-all duration-200',
+                    formData.contactMethod === 'telegram'
+                      ? 'bg-core shadow-brutal'
+                      : 'bg-transparent hover:bg-yellow'
+                  ]"
+                >
+                  <input type="radio" v-model="formData.contactMethod" value="telegram" class="sr-only" />
+                  <span class="font-display font-bold text-sm uppercase">Telegram</span>
+                </label>
+                <label
+                  :class="[
+                    'flex items-center justify-center px-4 py-3 border-4 border-ink cursor-pointer transition-all duration-200',
+                    formData.contactMethod === 'linkedin'
+                      ? 'bg-core shadow-brutal'
+                      : 'bg-transparent hover:bg-yellow'
+                  ]"
+                >
+                  <input type="radio" v-model="formData.contactMethod" value="linkedin" class="sr-only" />
+                  <span class="font-display font-bold text-sm uppercase">LinkedIn</span>
+                </label>
+              </div>
+
+              <!-- Dynamic Input Field -->
+              <input
+                v-if="formData.contactMethod === 'phone'"
+                :value="formData.contactValue"
+                @input="formData.contactValue = onPhoneInput($event)"
+                @focus="onPhoneFocus"
+                type="tel"
+                inputmode="tel"
+                required
+                class="w-full bg-transparent border-0 border-b-4 border-ink font-body text-xl md:text-2xl text-ink focus:border-core focus:outline-none transition-colors duration-200 pb-2"
+                placeholder="+380"
+              />
+              <input
+                v-else-if="formData.contactMethod === 'email'"
+                v-model="formData.contactValue"
+                type="email"
+                inputmode="email"
+                required
+                class="w-full bg-transparent border-0 border-b-4 border-ink font-body text-xl md:text-2xl text-ink focus:border-core focus:outline-none transition-colors duration-200 pb-2"
+                placeholder="your@email.com"
+              />
+              <input
+                v-else-if="formData.contactMethod === 'telegram'"
+                v-model="formData.contactValue"
+                type="text"
+                required
+                class="w-full bg-transparent border-0 border-b-4 border-ink font-body text-xl md:text-2xl text-ink focus:border-core focus:outline-none transition-colors duration-200 pb-2"
+                placeholder="@username"
+              />
+              <input
+                v-else-if="formData.contactMethod === 'linkedin'"
+                v-model="formData.contactValue"
+                type="url"
+                inputmode="url"
+                required
+                class="w-full bg-transparent border-0 border-b-4 border-ink font-body text-xl md:text-2xl text-ink focus:border-core focus:outline-none transition-colors duration-200 pb-2"
+                placeholder="linkedin.com/in/username"
+              />
             </div>
 
             <!-- Message Input (optional) -->
@@ -144,6 +222,14 @@
               ">
               ✓ Заявку відправлено! Ми зв'яжемося з вами найближчим часом.
             </div>
+
+            <!-- Error Message -->
+            <div v-if="errorMessage" class="
+                p-4 border-4 border-ink bg-error
+                font-body text-lg text-white text-center
+              ">
+              {{ errorMessage }}
+            </div>
           </form>
         </div>
 
@@ -169,15 +255,22 @@
 </template>
 
 <script setup lang="ts">
-import { useUaPhone } from '@/composables/useUaPhone';
+import { useUaPhone } from '@/composables/useUaPhone'
+import { useTelegram } from '@/composables/useTelegram'
+
+const { onPhoneFocus, onPhoneInput } = useUaPhone()
+const { sendContactForm } = useTelegram()
+
 const formData = ref({
   name: '',
-  phone: '',
+  contactMethod: 'phone' as 'phone' | 'email' | 'telegram' | 'linkedin',
+  contactValue: '',
   message: ''
-});
+})
 
-const isSubmitting = ref(false);
-const showSuccess = ref(false);
+const isSubmitting = ref(false)
+const showSuccess = ref(false)
+const errorMessage = ref('')
 
 const socials = [
   { name: 'INSTAGRAM', link: 'https://instagram.com' },
@@ -191,36 +284,34 @@ const legalLinks = [
 ];
 
 const handleSubmit = async () => {
-  isSubmitting.value = true;
+  isSubmitting.value = true
+  errorMessage.value = ''
 
-  try {
-    // TODO: Integrate with Telegram Bot API
-    console.log('Form submitted:', formData.value);
+  const result = await sendContactForm({
+    name: formData.value.name,
+    contactMethod: formData.value.contactMethod,
+    contactValue: formData.value.contactValue,
+    service: 'general',
+    message: formData.value.message
+  })
 
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
+  isSubmitting.value = false
 
-    // Show success message
-    showSuccess.value = true;
+  if (result.success) {
+    showSuccess.value = true
 
-    // Reset form
     formData.value = {
       name: '',
-      phone: '',
+      contactMethod: 'phone',
+      contactValue: '',
       message: ''
-    };
+    }
 
-    // Hide success message after 5 seconds
     setTimeout(() => {
-      showSuccess.value = false;
-    }, 5000);
-
-  } catch (error) {
-    console.error('Error submitting form:', error);
-    alert('Помилка відправки. Спробуйте ще раз.');
-  } finally {
-    isSubmitting.value = false;
+      showSuccess.value = false
+    }, 5000)
+  } else {
+    errorMessage.value = 'Помилка відправки. Спробуйте ще раз.'
   }
-};
-const { onPhoneFocus, onPhoneInput } = useUaPhone();
+}
 </script>

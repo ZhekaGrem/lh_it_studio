@@ -1,71 +1,39 @@
 <script setup lang="ts">
 import { X, Send } from 'lucide-vue-next'
 
-interface Message {
-  role: 'user' | 'assistant'
-  content: string
-  timestamp: Date
-}
-
-interface Props {
-  isOpen: boolean
-}
-
-const props = defineProps<Props>()
-
-const messages = ref<Message[]>([
-  {
-    role: 'assistant',
-    content: 'Привіт! Я AI асистент L&H Studio. Чим можу допомогти?',
-    timestamp: new Date()
-  }
-])
+// Використовуємо composable для роботи з AI
+const { isOpen, messages, isLoading, sendMessage, closeChat } = useAiChat()
 
 const input = ref('')
-const isTyping = ref(false)
 const messagesEndRef = ref<HTMLDivElement | null>(null)
 
-watch(() => messages.value, () => {
+// Додаємо привітальне повідомлення, якщо чат порожній
+onMounted(() => {
+  if (messages.value.length === 0) {
+    messages.value = [{
+      id: '0',
+      role: 'assistant',
+      content: 'Привіт! Я AI асистент L&H Studio. Чим можу допомогти?',
+      timestamp: new Date()
+    }]
+  }
+})
+
+// Автоскрол до нових повідомлень
+watch(() => messages.value.length, () => {
   nextTick(() => {
     messagesEndRef.value?.scrollIntoView({ behavior: 'smooth' })
   })
-}, { deep: true })
-
-const emit = defineEmits<{
-  close: []
-}>()
+})
 
 const handleSend = async () => {
-  if (!input.value.trim()) return
+  if (!input.value.trim() || isLoading.value) return
 
-  const userMessage: Message = {
-    role: 'user',
-    content: input.value,
-    timestamp: new Date()
-  }
-
-  messages.value = [...messages.value, userMessage]
   const userInput = input.value
   input.value = ''
-  isTyping.value = true
 
-  // TODO: API Call до Claude або GPT
-  try {
-    // Симуляція API відповіді
-    await new Promise(resolve => setTimeout(resolve, 1500))
-
-    const aiMessage: Message = {
-      role: 'assistant',
-      content: `Дякую за ваше повідомлення: "${userInput}". Це тестова відповідь. Інтеграція з AI API буде додана пізніше.`,
-      timestamp: new Date()
-    }
-
-    messages.value = [...messages.value, aiMessage]
-  } catch (error) {
-    console.error('Chat error:', error)
-  } finally {
-    isTyping.value = false
-  }
+  // Відправка повідомлення до AI через composable
+  await sendMessage(userInput)
 }
 
 const quickActions = ['Ціни', 'Термін розробки', 'Портфоліо', 'Технології']
@@ -104,7 +72,7 @@ const handleQuickAction = (action: string) => {
             </div>
           </div>
           <button
-            @click="emit('close')"
+            @click="closeChat"
             class="w-10 h-10 bg-foreground text-yellow hover:bg-core hover:text-black border-4 border-black transition-colors -rotate-6"
           >
             <X class="w-6 h-6 mx-auto" />
@@ -137,7 +105,7 @@ const handleQuickAction = (action: string) => {
           </div>
 
           <!-- Typing Indicator -->
-          <div v-if="isTyping" class="flex justify-start">
+          <div v-if="isLoading" class="flex justify-start">
             <div class="bg-bg px-4 py-3 border-4 border-black -rotate-1 shadow-brutal">
               <div class="flex gap-1">
                 <div class="w-2 h-2 bg-foreground rounded-full animate-bounce"></div>
@@ -168,7 +136,7 @@ const handleQuickAction = (action: string) => {
               variant="primary"
               size="md"
               rotation="-rotate-2"
-              :disabled="!input.trim() || isTyping"
+              :disabled="!input.trim() || isLoading"
               @click="handleSend"
             >
               <Send class="w-5 h-5" />

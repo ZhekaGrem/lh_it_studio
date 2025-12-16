@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { projects } from '~/data/projects'
-
+import { ChevronLeft } from 'lucide-vue-next'
 const route = useRoute()
 const router = useRouter()
 
