@@ -88,7 +88,7 @@ export default defineNuxtConfig({
   // Sitemap
   sitemap: {
     enabled: true,
-    hostname: seoConfig.site.url,
+    urls: seoConfig.site.url,
     gzip: true,
     exclude: ['/api/**'],
     defaults: {
@@ -175,7 +175,7 @@ export default defineNuxtConfig({
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
         {
           rel: 'stylesheet',
-          href: 'https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700;900&family=Inter:wght@400;500&family=Press+Start+2P&display=swap'
+          href: 'https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700;900&family=Inter:wght@400;500&family=Press+Start+2P&family=JetBrains+Mono:wght@400;500;600;700&display=swap'
         },
 
         // Canonical

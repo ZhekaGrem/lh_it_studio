@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 import type { Project, ProjectSection } from '~/types/portfolio'
 import { projects as allProjects } from '~/data/projects'
 import { ChevronLeft, ChevronRight } from 'lucide-vue-next'
@@ -11,6 +10,8 @@ const mapProjectToSection = (p: Project): ProjectSection => ({
   description: p.shortDescription,
   tech: p.technologies.map(t => t.name),
   image: p.image,
+  laptopImage: p.laptopImage,
+  phoneImage: p.phoneImage,
   url: `/projects/${p.id}`,
   stats: p.results.slice(0, 2).map(r => ({
     label: r.metric,
@@ -79,7 +80,8 @@ onUnmounted(() => {
 
 <template>
   <section class="py-20 bg-ink relative overflow-hidden text-white">
-    <div class="container mb-12">
+    <div class="bg-gradient-to-b from-transparent via-white to-transparent animate-scanline w-full h-full absolute"/>
+    <div class="container">
       <div class="flex items-end justify-between flex-wrap gap-4">
         <div>
           <div class="inline-block bg-yellow px-6 py-3 border-4 border-white rotate-2 shadow-brutal-core mb-4">
@@ -98,28 +100,27 @@ onUnmounted(() => {
     </div>
 
     <div class="container">
-      <div class="relative max-w-6xl mx-auto">
+      <div class="relative ">
         
-        <div class="relative bg-[#2A2A2A] border-8 border-[#1A1A1A] rounded-3xl p-4 md:p-8 shadow-[0_20px_60px_rgba(0,0,0,0.8)]">
+        <div class="relative">
+          <div class="absolute top-0 left-0 right-0 h-12  pointer-events-none" />
           
-          <div class="absolute top-0 left-0 right-0 h-12 bg-gradient-to-b from-[#3A3A3A] to-transparent rounded-t-2xl pointer-events-none" />
-          
-          <div class="absolute top-4 left-1/2 -translate-x-1/2 bg-[#1A1A1A] px-4 py-1 rounded-full border-2 border-core z-10">
+          <div class="absolute top-4 left-1/2 -translate-x-1/2 bg-ink px-4 py-1 rounded-full border-2 border-core z-10">
             <span class="text-xs font-bold text-core font-mono tracking-widest">LH_STUDIO</span>
           </div>
 
-          <div class="relative bg-ink border-4 border-[#1A1A1A] rounded-xl overflow-hidden min-h-[500px] md:min-h-[600px]">
+          <div class="relative border-4 border-[#1A1A1A] overflow-hidden ">
             
             <div class="absolute inset-0 pointer-events-none z-20 opacity-10">
-              <div class="absolute inset-0 bg-gradient-to-b from-transparent via-white to-transparent animate-scanline" />
+              <div class="absolute inset-0 " />
             </div>
-            <div class="absolute inset-0 pointer-events-none z-10 bg-[radial-gradient(circle,transparent_0%,rgba(0,0,0,0.6)_100%)]" />
+            <div class="absolute inset-0 pointer-events-none z-10 " />
 
             <div class="grid lg:grid-cols-2 h-full relative z-0">
               
-              <div class="relative bg-gradient-to-br from-[#111] to-[#1A1A1A] p-6 md:p-12 flex flex-col justify-center border-b-4 lg:border-b-0 lg:border-r-4 border-core/20">
+              <div class="relative flex flex-col justify-center   border-core/20">
                 <div :key="currentIndex"> <div 
-                    class="inline-block mb-6 bg-core px-4 py-2 border-4 border-white origin-left"
+                    class="inline-block mb-6 bg-core px-4 py-2  border-white origin-left"
                     :class="direction === 'right' ? 'animate-slide-in-left' : 'animate-slide-in-right'"
                     style="transform: rotate(-2deg);"
                   >
@@ -183,14 +184,15 @@ onUnmounted(() => {
                 </div>
               </div>
 
-              <div class="relative bg-[#0A0A0A] overflow-hidden min-h-[300px] lg:min-h-auto">
-                <div 
+              <div class="relative overflow-hidden min-h-[500px] lg:min-h-auto flex items-center justify-center">
+                <div
                   :key="currentIndex"
-                  class="absolute inset-0 w-full h-full"
+                  class="absolute inset-0 w-full h-full flex items-center justify-center"
                   :class="direction === 'right' ? 'animate-slide-in-right-image' : 'animate-slide-in-left-image'"
                 >
-                  <img :src="currentProject.image" :alt="currentProject.title" class="w-full h-full object-cover" />
-                  <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                  <img v-if="currentProject.laptopImage" :src="currentProject.laptopImage" :alt="`${currentProject.title} - ноутбук`" class="laptop-3d absolute left-[30%] top-[45%]  object-contain z-0" />
+                  <img v-if="currentProject.phoneImage" :src="currentProject.phoneImage" :alt="`${currentProject.title} - телефон`" class="phone-rotate absolute right-[16%] top-[55%] w-[11%] h-auto object-contain z-0" />
+                  <img v-if="currentProject.image" :src="currentProject.image" :alt="`${currentProject.title}`" class="absolute inset-0 w-full h-full object-contain z-20 pointer-events-none" />
                 </div>
                 
                 <div class="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none">
@@ -227,12 +229,8 @@ onUnmounted(() => {
               />
             </div>
 
-          </div> <div class="mt-4 flex justify-center">
-            <div class="w-32 h-6 bg-[#1A1A1A] border-4 border-[#0A0A0A] rounded-t-lg shadow-inner" />
-          </div>
-          <div class="flex justify-center -mt-1">
-            <div class="w-56 h-3 bg-gradient-to-b from-[#2A2A2A] to-[#1A1A1A] rounded-b-xl shadow-lg" />
-          </div>
+          </div> 
+      
 
         </div>
       </div>
@@ -288,4 +286,8 @@ onUnmounted(() => {
 .animate-fade-in-down-delayed { animation: fade-down 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards; opacity: 0; }
 .animate-fade-in-down-delayed-2 { animation: fade-down 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards; opacity: 0; }
 .animate-fade-in-down-delayed-3 { animation: fade-up-rot 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards; opacity: 0; }
+
+/* --- 3D TRANSFORMS --- */
+.laptop-3d { transform: translateY(-47%) rotateY(-30deg) rotateZ(5deg) rotateX(-4deg); transform-origin: left center; }
+.phone-rotate { transform: translateY(-50%) rotate(2deg); }
 </style>

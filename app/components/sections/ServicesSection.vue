@@ -42,10 +42,12 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <section id="services" class="py-20 bg-bg relative overflow-hidden">
-
-    <!-- Section Header -->
-    <div class="max-w-7xl mx-auto px-4 mb-16">
+  <section
+    id="services"
+    class="py-20 bg-bg relative overflow-hidden"
+  >
+      <!-- Section Header -->
+      <div class="max-w-7xl mx-auto px-4 mb-16">
       <div class="inline-block bg-core px-6 py-3 border-4 border-black rotate-2 shadow-brutal-md mb-6">
         <h2 class="text-5xl font-bold font-display text-black uppercase">Послуги</h2>
       </div>

@@ -2,17 +2,24 @@ import type { Config } from 'tailwindcss'
 
 export default {
   content: [
-    './components/**/*.{js,vue,ts}',
-    './layouts/**/*.vue',
-    './pages/**/*.vue',
-    './plugins/**/*.{js,ts}',
-    './app.vue',
-    './error.vue',
+    './app/components/**/*.{js,vue,ts}',
+    './app/layouts/**/*.vue',
+    './app/pages/**/*.vue',
+    './app/plugins/**/*.{js,ts}',
+    './app/app.vue',
+    './app/error.vue',
+  ],
+  safelist: [
+    'animate-slide-up',
+    'animate-slide-down',
+    'animate-slide-left',
+    'animate-slide-right',
+    'opacity-0',
   ],
   theme: {
     container: {
       center: true,
-      padding: "2rem",
+      padding: "1rem",
       screens: {
         "2xl": "1400px",
       },
@@ -73,6 +80,7 @@ export default {
         display: ["var(--font-display)", "sans-serif"],
         body: ["var(--font-body)", "sans-serif"],
         pixel: ["var(--font-pixel)", "monospace"],
+        tech: ["var(--font-tech)", "monospace"],
       },
       spacing: {
         xs: "var(--space-xs)",

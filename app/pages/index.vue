@@ -24,6 +24,7 @@ const closeConsultation = () => {
       <HeroSection @open-consultation="openConsultation" />
       <MarqueeSection />
       <ServicesSection @open-consultation="openConsultation" />
+      <TechStackSection />
       <PortfolioMonitor />
       <ProjectCTA @open-consultation="openConsultation" />
       <WhyUsSection />

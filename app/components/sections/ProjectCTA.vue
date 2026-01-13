@@ -5,7 +5,10 @@ defineEmits<{
 </script>
 
 <template>
-  <section id="portfolio-cta" class="py-20 bg-bg relative overflow-hidden">
+  <section
+    id="portfolio-cta"
+    class="py-20 bg-bg relative overflow-hidden"
+  >
 
     <!-- Decorative Elements -->
     <div class="absolute top-20 left-10 w-32 h-32 bg-core border-4 border-black rotate-45 opacity-10"></div>

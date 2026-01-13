@@ -85,39 +85,15 @@ const emit = defineEmits<{
 
         <!-- Right Content - 3D Wireframe -->
         <div class="relative h-[500px] flex items-center justify-center">
-          <div class="absolute inset-0 bg-gradient-to-br from-core/20 to-yellow/20 blur-3xl"></div>
+          <div class="absolute inset-0 bg-[#ECFCFF] blur-3xl -z-10"></div>
 
           <!-- Animated 3D Element -->
-          <div class="relative w-full h-full border-4 border-black bg-foreground/5 rotate-3 shadow-brutal-xl">
-            <svg viewBox="0 0 400 400" class="w-full h-full">
-              <!-- Grid -->
-              <g stroke="#FF4D00" stroke-width="2" opacity="0.3">
-                <line v-for="i in 10" :key="`v-${i}`" :x1="i * 40" y1="0" :x2="i * 40" y2="400" />
-                <line v-for="i in 10" :key="`h-${i}`" x1="0" :y1="i * 40" x2="400" :y2="i * 40" />
-              </g>
-
-              <!-- Rotating Cube -->
-              <g class="animate-spin-slow origin-center">
-                <rect x="150" y="150" width="100" height="100" fill="none" stroke="#FFD700" stroke-width="4" />
-                <rect x="170" y="130" width="100" height="100" fill="none" stroke="#FF4D00" stroke-width="4" />
-                <line x1="150" y1="150" x2="170" y2="130" stroke="#111" stroke-width="2" />
-                <line x1="250" y1="150" x2="270" y2="130" stroke="#111" stroke-width="2" />
-                <line x1="150" y1="250" x2="170" y2="230" stroke="#111" stroke-width="2" />
-                <line x1="250" y1="250" x2="270" y2="230" stroke="#111" stroke-width="2" />
-              </g>
-
-              <!-- Orbiting Circle -->
-              <circle cx="200" cy="200" r="120" fill="none" stroke="#FF4D00" stroke-width="2" stroke-dasharray="5,5">
-                <animateTransform
-                  attributeName="transform"
-                  type="rotate"
-                  from="0 200 200"
-                  to="360 200 200"
-                  dur="10s"
-                  repeatCount="indefinite"
-                />
-              </circle>
-            </svg>
+          <div class="relative w-full h-full   rotate-3 shadow-brutal-xl overflow-hidden">
+            <img
+              src="/gif/bg.gif"
+              alt="Animated background"
+              class="w-full h-full object-cover"
+            />
           </div>
 
           <!-- Floating Stats -->

@@ -3,18 +3,20 @@ export interface Project {
   title: string
   shortDescription: string
   fullDescription: string
-  category: ProjectCategory
+  category: string
   technologies: Technology[]
   features: string[]
   results: ProjectResult[]
   image: string
+  laptopImage?: string
+  phoneImage?: string
   demoLink?: string
   githubLink?: string
   backgroundColor: string
   rotation: string
 }
 
-// --- Types --- 
+// --- Types ---
 export interface ProjectSection {
   id: string
   title: string
@@ -22,6 +24,8 @@ export interface ProjectSection {
   description: string
   tech: string[]
   image: string
+  laptopImage?: string
+  phoneImage?: string
   url: string
   stats?: {
     label: string
@@ -30,11 +34,6 @@ export interface ProjectSection {
 }
 
 
-export type ProjectCategory =
-  | 'E-Commerce'
-  | 'AI & Automation'
-  | 'Real Estate'
-  | 'Event Management'
 
 export interface Technology {
   name: string
